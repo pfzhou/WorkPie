@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>ng-model directive</title>
+    <script src="./bower_components/angularjs/angular.js"></script>
+    <script>
+        var myApp = angular.module('myApp', []);
+
+        myApp.controller('HelloController',function($scope) {
+          $scope.init = function() {
+            $scope.greeting.name = "Hello";
+            $scope.change($scope.greeting);
+          }
+          $scope.change = function (value) {
+            console.log("helloCtr1", value);
+            $scope.$emit("valueNameChange", value);
+          };
+        });
+        myApp.controller('CounterCtrl',function($scope) {
+          $scope.counter = 1;
+          $scope.add = function(){
+            $scope.counter++;
+          }
+        });
+        myApp.controller('PhoneListCtrl', function ($scope) {
+          $scope.phones = [
+            {'name': 'Nexus S',
+             'snippet': 'Fast just got faster with Nexus S.',
+             'age': 1},
+            {'name': 'Motorola XOOM™ with Wi-Fi',
+             'snippet': 'The Next, Next Generation tablet.',
+             'age': 2},
+            {'name': 'MOTOROLA XOOM™',
+             'snippet': 'The Next, Next Generation tablet.',
+             'age': 3}
+          ];
+          $scope.orderProp = 'age';
+          $scope.$on("valueChangeFromBody",
+            function (event, msg) {
+              console.log("phonectrl", msg);
+              $scope.greeting = msg;
+            }
+          );
+        });
+        myApp.controller('bodyController', function($scope){
+          $scope.$on("valueNameChange",
+            function (event, msg) {
+              console.log("parent", msg);
+              $scope.$broadcast("valueChangeFromBody", msg);
+          });
+          //$scope.user.name = 'Leon';
+        ;});
+        myApp.controller('navCtrl', function($scope){});
+        myApp.controller('loginCtrl', function($scope){});
+    </script>
+</head>
+<body ng-controller="bodyController">
+  {{greeting.name}}
+  myName = <input ng-model="user1.name"><p />
+  <div ng-controller="CounterCtrl">
+    count = <sapn ng-model="counter">{{counter}}</span><p />
+    <button ng-click="add()">increase</button>
+  </div>
+
+  <button ng-click="show = !show">Show</button>
+  <div ng-show="show">
+      I am only visible when show is true.
+  </div>
+  <div ng-controller="HelloController">
+      <p>双向绑定</p>
+      <input ng-model="greeting.name"  ng-change="change(greeting);" />
+      <p>Hello {{greeting.name || "World"}}, {{user1.name}}</p>
+      <button ng-click="init()">重置</button>
+      <hr>
+  </div>
+
+  <div ng-controller="PhoneListCtrl">
+
+  <sapn ng-model="greeting">{{greeting}}</span>
+  <br />
+  Search: <input ng-model="query">
+  Sort by:
+  <select ng-model="orderProp">
+    <option value="name">Alphabetical</option>
+    <option value="age">Newest</option>
+  </select>
+
+
+  <ul class="phones">
+    <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+      <span>{{phone.name}}</span>
+      <p>{{phone.snippet}}</p>
+    </li>
+  </ul>
+  </div>
+
+<!-- <script src="js/angular.js"></script> -->
+</body>
+</html>
