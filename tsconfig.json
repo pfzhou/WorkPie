@@ -17,6 +17,12 @@
     "files": [
         "./app/app.ts",
         "./app/workspace/workspacedirective.ts",
-        "./typings/angular.d.ts"
+        "./typings/angular.d.ts",
+        "./typings/github-electron-main.d.ts",
+        "./typings/github-electron-renderer.d.ts",
+        "./typings/github-electron.d.ts",
+        "./typings/jquery.d.ts",
+        "./typings/node.d.ts",
+        "./typings/underscore.d.ts"
     ]
 }
