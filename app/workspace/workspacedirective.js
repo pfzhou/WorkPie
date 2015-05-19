@@ -5,7 +5,6 @@ var workspaceDirective = angular.module('workspaceDirective', []);
 workspaceDirective.directive('workspace', function () {
     return {
         restrict: 'E',
-        //template: '<div ng-transclude>main</div>',
         templateUrl: 'workspace/workspace.html',
         //replace: true,
         transclude: true
@@ -15,29 +14,20 @@ workspaceDirective.directive('workspace', function () {
 workspaceDirective.directive('workspaceleft', function () {
     return {
         restrict: 'E',
-        //replace: true,
-        //template: '<div>Hi there <span ng-transclude></span></div>',
-        templateUrl: 'workspace/workspaceleft.html',
-        transclude: true
+        templateUrl: 'workspace/workspaceleft.html'
     };
 });
 //主导航列表
 workspaceDirective.directive('workspacelist', function () {
     return {
         restrict: 'E',
-        //replace: true,
-        //template: '<div>Hi there <span ng-transclude></span></div>',
-        templateUrl: 'workspace/workspacelist.html',
-        transclude: true
+        templateUrl: 'workspace/workspacelist.html'
     };
 });
 //文档窗口
 workspaceDirective.directive('workspacedoc', function () {
     return {
         restrict: 'E',
-        //replace: true,
-        //template: '<div>Hi there <span ng-transclude></span></div>',
-        templateUrl: 'workspace/workspacedoc.html',
-        transclude: true
+        templateUrl: 'workspace/workspacedoc.html'
     };
 });
