@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="workpieApp">
+<head>
+  <meta charset="utf-8">
+  <title>WorkPie</title>
+  <script src="../lib/angular.js"></script>
+  <script src="../lib/bg-splitter.js"></script>
+  <script src="workspace/workspaceDirective.js"></script>
+  <script src="app.js"></script>
+  <link rel="stylesheet" href="../lib/css/bg-splitter.css" media="screen" type="text/css" />
+</head>
+
+<body>
+  <!-- <h1>Hello WorkPie!  </h1> -->
+
+  <!-- <workspace bg-splitter orientation="horizontal">1
+    <workspaceleft bg-pane min-size="100">2
+    </workspaceleft>
+    <workspacelist bg-pane min-size="150">3
+    </workspacelist>
+    <workspacedoc>4
+    </workspacedoc>5
+  </workspace>6 -->
+  <workspace style="width:100%;height:100%;position: absolute;">
+    <workspaceleft style="width:20px;height:100%;background-color:#000000;position: absolute;">2
+    </workspaceleft>
+    <bg-splitter orientation="horizontal">
+      <bg-pane min-size="100">
+        <workspacelist style="width:150px;height:100%;background-color:#cccccc;position:fixed;left:25px">1
+        </workspacelist>
+      </bg-pane>
+      <bg-pane min-size="150">
+        <workspacedoc>4
+        </workspacedoc>
+      </bg-pane>
+    </bg-splitter>
+  </workspace>
+
+
+</body>
+
+</html>

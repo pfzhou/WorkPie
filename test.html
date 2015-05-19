@@ -8,8 +8,10 @@
         var myApp = angular.module('myApp', []);
 
         myApp.controller('HelloController',function($scope) {
+          $scope.greeting = {};
           $scope.init = function() {
-            $scope.greeting.name = "Hello";
+            //$scope.greeting = {};
+            $scope.greeting.name = "gongcen";
             $scope.change($scope.greeting);
           }
           $scope.change = function (value) {
@@ -76,23 +78,22 @@
   </div>
 
   <div ng-controller="PhoneListCtrl">
-
-  <sapn ng-model="greeting">{{greeting}}</span>
-  <br />
-  Search: <input ng-model="query">
-  Sort by:
-  <select ng-model="orderProp">
-    <option value="name">Alphabetical</option>
-    <option value="age">Newest</option>
-  </select>
-
-
-  <ul class="phones">
-    <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
-      <span>{{phone.name}}</span>
-      <p>{{phone.snippet}}</p>
-    </li>
-  </ul>
+<!--    <sapn ng-model="greeting">{{greeting}}</span>-->
+    <br />
+    Search: <input ng-model="query">
+    Sort by:
+    <select ng-model="orderProp">
+      <option value="name">Alphabetical</option>
+      <option value="age">Newest</option>
+    </select>
+  
+  
+    <ul class="phones">
+      <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+        <span>{{phone.name}}</span>
+        <p>{{phone.snippet}}</p>
+      </li>
+    </ul>
   </div>
 
 <!-- <script src="js/angular.js"></script> -->
