@@ -13,14 +13,16 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 960,
+    height:700,
     'auto-hide-menu-bar': false,
     'use-content-size': true,
   });
 
 
+  //mainWindow.loadUrl('file://' + __dirname + '/app/app.html');
   mainWindow.loadUrl('file://' + __dirname + '/app/app.html');
+
   mainWindow.focus();
 
   // mainWindow.on('closed', function() {

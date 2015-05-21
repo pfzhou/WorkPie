@@ -6,7 +6,6 @@ workspaceDirective.directive('workspace', function () {
     return {
         restrict: 'E',
         templateUrl: 'workspace/workspace.html',
-        //replace: true,
         transclude: true
     };
 });
@@ -28,6 +27,6 @@ workspaceDirective.directive('workspacelist', function () {
 workspaceDirective.directive('workspacedoc', function () {
     return {
         restrict: 'E',
-        templateUrl: 'workspace/workspacedoc.html'
+        templateUrl: './workspace/workspacedoc.html'
     };
 });

@@ -11,7 +11,7 @@
   display: block;
   box-sizing: border-box;
   background-color: #252525;
-
+  border: none;
 }
 
 .workspacelist {
@@ -27,11 +27,10 @@
   transition: width 0.2s ease-out;
   box-sizing: border-box;
   background-color: #fff;
-
 }
 
 .workspacedoc {
-  width: 100%;
+  width: 730px;
   height: 100%;
   top: 0px;
   left: 350px;
@@ -40,8 +39,28 @@
   position: absolute;
   min-width: 300px;
   border: none;
+  padding: 5px;
   display: block;
   box-sizing: border-box;
   background-color: #ccc;
+}
 
+i {
+  color:#666;
+}
+
+.i-active {
+  color:#fff;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+.editable
+ {
+    outline: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid #dbdbdb;
 }

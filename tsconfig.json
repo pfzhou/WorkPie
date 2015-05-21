@@ -16,7 +16,7 @@
     ],
     "files": [
         "./app/app.ts",
-        "./app/workspace/workspacedirective.ts",
+        "./app/workspace/workspaceDirective.ts",
         "./typings/angular.d.ts",
         "./typings/github-electron-main.d.ts",
         "./typings/github-electron-renderer.d.ts",

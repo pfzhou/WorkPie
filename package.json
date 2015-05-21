@@ -1,5 +1,14 @@
 {
-  "name"    : "WorkPie",
-  "version" : "0.1.0",
-  "main"    : "main.js"
+  "name": "WorkPie",
+  "main": "./app/app.html",
+  "description": "WorkPie!",
+  "version": "0.1.0",
+  "keywords": [ "work", "desktop", "GTD", "Notes" ],
+  "window": {
+      "title": "WorkPie",
+      "toolbar": true,
+      "width": 1080,
+      "height": 700,
+      "frame": true
+  }
 }

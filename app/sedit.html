@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>small editor | demo</title>
+    <link rel="stylesheet" href="../lib/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../smalleditor/dist/css/smalleditor.css" />
+    <link rel="stylesheet" href="../smalleditor/public/css/demo.css">
+</head>
+<body ng-app='smalleditorDemo' ng-controller='EditorController'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <ul class="nav nav-tabs" role="tablist">
+          <li ng-click="revision=null" ng-class="{active: !revision}"><a href="#">Editor Demo</a></li>
+          <li ng-show="revision" ng-class="{active: revision}"><a href="#">Revision {{ revision.revNumber }} at {{ revision.dt | date: 'yyyy-MM-dd HH:mm:ss' }}</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane" ng-class="{active: !revision}" id="editordemo">
+            <div smalleditor api='api'>
+              <h2>First Editor </h2>
+              <p>My father’s family name being <a href="https://en.wikipedia.org/wiki/Pip_(Great_Expectations)">Pirrip</a>, and my Christian name Philip, my infant tongue could make of both names nothing longer or more explicit than Pip. So, I called myself Pip, and came to be called Pip.</p>
+
+            </div>
+          </div>
+          <div class="tab-pane" ng-class="{active: revision}" id="revisiondemo">
+            <p>
+              <div ng-bind-html="revisionHTML"></div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Revisions
+              <span class="small text-muted">
+                (Text will be autosaved in every 10 seconds)
+                <span class="text-info" ng-show="saving">Saving...</span>
+              </span>
+            </h3>
+          </div>
+          <div class="list-group">
+            <a href="#" ng-repeat="rev in revisions.slice().reverse() | limitTo: 10 | orderBy:revNumber" ng-click="showRevision(rev)" class="list-group-item">
+              Autosaved <span class="pull-right small"> Revision {{ rev.revNumber }} at {{ rev.dt | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../lib/js/jquery.js"></script>
+<script src="../lib/js/angular.js"></script>
+<script src="../smalleditor/public/js/lib/angular-route.min.js"></script>
+<!-- <script src="../smalleditor/dist/js/smalleditor-core.js"></script> -->
+<!-- <script src="../smalleditor/dist/js/smalleditor-directive.js"></script> -->
+<script src="../smalleditor/dist/js/smalleditor.js"></script>
+<script src="../smalleditor/public/js/demo.js"></script>
+</html>
