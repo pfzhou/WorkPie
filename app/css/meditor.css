@@ -1,0 +1,125 @@
+*:focus {
+    outline: none;
+}
+
+/*body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    line-height: 30px;
+}*/
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    z-index: 10;
+    padding: 10px;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, .8);
+    box-shadow: 0 0 4px #000;
+    box-sizing: border-box;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 50px;
+}
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 40px;
+}
+
+p {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 10px;
+}
+
+/*a {
+    color:black;
+}
+
+a:hover {
+    color:green;
+}*/
+
+pre {
+    /*font-family: 'Menlo', monospace;*/
+    font-size: 16px;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #666;
+}
+
+
+blockquote {
+    font-size: 18px;
+    display: block;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 6px solid #df0d32;
+    margin-left: -5px;
+    padding-left: 15px;
+    font-style: italic;
+    color: #555;
+}
+
+#container {
+    width: 700px;
+    padding-color: #df0d32;
+    padding: 5px;
+    margin: 15px 0 0 0;
+    background-color: #fff;
+}
+
+.editable
+ {
+    outline: none;
+    margin: 0 0 20px 0;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid #dbdbdb;
+    min-height: 500px;
+}
+
+#columns {
+    width: 90%;
+    margin: 15px auto;
+}
+
+.titlecontainer{
+  width: 100%;
+  border-bottom-style:inset;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  padding-left: 10px;
+}
+
+.titleinput{
+  /*border-left-style:none;
+  border-right-style:none;
+  border-top-style:none;*/
+  border: none;
+  outline:none;
+  width:100%;
+  display:block;
+}
+
+.titlediv{
+  width:100%;
+  border: none;
+  /*border-bottom-style:inset;
+  border-color: #eee;
+  border-width: 2px;*/
+  display:block;
+}

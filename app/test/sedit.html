@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>small editor | demo</title>
-    <link rel="stylesheet" href="../lib/css/bootstrap.css"/>
-    <link rel="stylesheet" href="../smalleditor/dist/css/smalleditor.css" />
-    <link rel="stylesheet" href="../smalleditor/public/css/demo.css">
+    <link rel="stylesheet" href="../../lib/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../../../smalleditor/dist/css/smalleditor.css" />
+    <link rel="stylesheet" href="../../../smalleditor/public/css/demo.css">
 </head>
 <body ng-app='smalleditorDemo' ng-controller='EditorController'>
   <div class="container">
@@ -44,7 +44,7 @@
             </h3>
           </div>
           <div class="list-group">
-            <a href="#" ng-repeat="rev in revisions.slice().reverse() | limitTo: 10 | orderBy:revNumber" ng-click="showRevision(rev)" class="list-group-item">
+            <a href="#" ng-repeat="rev in revisions.slice() | limitTo: 10 | orderBy:revNumber" ng-click="showRevision(rev)" class="list-group-item">
               Autosaved <span class="pull-right small"> Revision {{ rev.revNumber }} at {{ rev.dt | date:'yyyy-MM-dd HH:mm:ss' }}</span>
             </a>
           </div>
@@ -53,11 +53,11 @@
     </div>
   </div>
 </body>
-<script src="../lib/js/jquery.js"></script>
-<script src="../lib/js/angular.js"></script>
-<script src="../smalleditor/public/js/lib/angular-route.min.js"></script>
-<!-- <script src="../smalleditor/dist/js/smalleditor-core.js"></script> -->
-<!-- <script src="../smalleditor/dist/js/smalleditor-directive.js"></script> -->
-<script src="../smalleditor/dist/js/smalleditor.js"></script>
-<script src="../smalleditor/public/js/demo.js"></script>
+<script src="../../lib/js/jquery.js"></script>
+<script src="../../lib/js/angular.js"></script>
+<script src="../../../smalleditor/public/js/lib/angular-route.min.js"></script>
+<!-- <script src="../../smalleditor/dist/js/smalleditor-core.js"></script> -->
+<!-- <script src="../../smalleditor/dist/js/smalleditor-directive.js"></script> -->
+<script src="../../../smalleditor/dist/js/smalleditor.js"></script>
+<script src="../../../smalleditor/public/js/demo.js"></script>
 </html>
