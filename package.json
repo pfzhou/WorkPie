@@ -3,12 +3,20 @@
   "main": "./app/app.html",
   "description": "WorkPie!",
   "version": "0.1.0",
-  "keywords": [ "work", "desktop", "GTD", "Notes" ],
+  "keywords": [
+    "work",
+    "desktop",
+    "GTD",
+    "Notes"
+  ],
   "window": {
-      "title": "WorkPie",
-      "toolbar": true,
-      "width": 1080,
-      "height": 700,
-      "frame": true
+    "title": "WorkPie",
+    "toolbar": true,
+    "width": 1080,
+    "height": 700,
+    "frame": true
+  },
+  "dependencies": {
+    "nedb": "^1.1.2"
   }
 }
