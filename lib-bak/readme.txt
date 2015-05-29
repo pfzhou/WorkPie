@@ -1,0 +1,1 @@
+{"medium-editor":"4.9.0","bootstrap":"?","angular":"1.3.15"}

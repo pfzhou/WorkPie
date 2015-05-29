@@ -15,10 +15,12 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./app/app.ts",
-        "./app/test/nedbtest.ts",
-        "./app/workspace/workspaceDirective.ts",
+        "./app.ts",
+        "./build/bulid_lib.ts",
+        "./directive/workspaceDirective.ts",
+        "./temp/nedbtest.ts",
         "./typings/angular.d.ts",
+        "./typings/fs-extra.d.ts",
         "./typings/github-electron-main.d.ts",
         "./typings/github-electron-renderer.d.ts",
         "./typings/github-electron.d.ts",

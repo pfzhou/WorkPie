@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="workpieApp">
+<head>
+  <meta charset="utf-8">
+  <title>WorkPie</title>
+  <link rel="stylesheet" href="./lib/css/bootstrap.css" />
+  <link rel="stylesheet" href="./lib/css/font-awesome.css" />
+  <link rel="stylesheet" href="./resources/css/app.css" />
+
+  <script src="./lib/js/underscore.js"></script>
+  <script src="./lib/js/angular.js"></script>
+  <script src="./lib/js/medium-editor.js" ></script>
+
+  <script src="./directive/commonDirective.js"></script>
+  <script src="./directive/workspaceDirective.js"></script>
+  <script src="./app.js"></script>
+</head>
+
+<body>
+  <workspace>
+    <workspaceleft class="workspaceleft">
+    </workspaceleft>
+    <workspacelist class="workspacelist">
+    </workspacelist>
+    <workspacedoc class="workspacedoc">
+    </workspacedoc>
+
+  </workspace>
+  <!-- <div class='workspacedoc'>
+    <link rel="stylesheet" href="./lib/css/medium-editor.css" />
+    <link rel="stylesheet" href="./lib/css/themes/default.css" />
+    <link rel="stylesheet" href="./resources/css/meditor.css" />
+
+    <div id="container">
+      <div class="titlecontainer">
+          <h2>
+            <input id="myTitleInput" placeholder="无标题" class="titleinput"
+              ng-model="myTitle"
+              ng-show="!show"
+              ng-blur="show = true"
+              />
+            <div class="titlediv"
+              ng-show="show"
+              ng-click="show = false">{{myTitle || "无标题"}}</div>
+          </h2>
+      </div>
+      <div class="editable">
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var elements = document.querySelectorAll('.editable');
+      var editor = new MediumEditor(elements, {
+            buttons: ['bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull','orderedlist', 'unorderedlist', 'pre', 'outdent', 'indent', 'header1', 'header2'],
+            buttonLabels: 'fontawesome',
+            placeholder: '请输入内容',
+            firstHeader: 'h1',
+            secondHeader: 'h2',
+            anchorInputPlaceholder: '输入链接地址',
+            anchorInputCheckboxLabel: '在新窗口中打开',
+      });
+    </script>
+
+  </div> -->
+</body>
+
+</html>

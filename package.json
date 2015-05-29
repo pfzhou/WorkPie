@@ -1,6 +1,6 @@
 {
   "name": "WorkPie",
-  "main": "./app/app.html",
+  "main": "./index.html",
   "description": "WorkPie!",
   "version": "0.1.0",
   "keywords": [
@@ -17,6 +17,8 @@
     "frame": true
   },
   "dependencies": {
-    "nedb": "^1.1.2"
+    "fs-extra": "^0.18.4",
+    "nedb": "^1.1.2",
+    "node-uuid": "^1.4.3"
   }
 }
