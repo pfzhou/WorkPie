@@ -1,0 +1,1 @@
+{"medium-editor":"4.11.1","bootstrap":"3.3.4","angular":"1.3.15","angular-route":"1.3.15","jquery":"2.1.4","underscore":"1.8.3","font-awesome":"4.3.0"}

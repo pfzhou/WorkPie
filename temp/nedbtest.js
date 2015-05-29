@@ -1,8 +1,7 @@
-/// <reference path="../../typings/nedb.d.ts"/>
-var uuid = require('../../node_modules/node-uuid');
-var dbpath = '../../node_modules/nedb';
-var nedb = require(dbpath);
-//import nedb = require('nedb');
+/// <reference path="../typings/nedb.d.ts"/>
+/// <reference path="../typings/node-uuid.d.ts"/>
+var nedb = require('nedb');
+var uuid = require('node-uuid');
 var db = new nedb({ filename: 'db/datafile.db' });
 db.loadDatabase(function (err) {
     if (err !== null)
@@ -13,7 +12,7 @@ console.log(db);
 //dba.doc = new nedb('db/doc.db');
 var WPDoc = (function () {
     function WPDoc() {
-        this.id = uuid.v4;
+        this.id = uuid.v4();
         this.title = '';
         this.content = '';
         this.project = '未分类';
@@ -29,19 +28,19 @@ var WPDoc = (function () {
 })();
 ;
 var doc = new WPDoc();
-doc.title = '测试文档3';
+doc.title = '测试文档2';
 console.log(doc);
 db.insert(doc, function (err, newDoc) {
-  if(err !== null){
-    console.log(err);
-    console.log(newDoc);
-  }
+    if (err !== null) {
+        console.log(err);
+        console.log(newDoc);
+    }
 });
-db.find({ title: { $regex: /测试文档2/ } }, function (err, docs) {
+db.find({ title: { $regex: /测试文档/ } }, function (err, docs) {
     //console.log(docs.length);
     console.log(docs);
 });
-db.find({ title: /测试文档2/ }, function (err, docs) {
+db.find({ title: /测试文档/ }, function (err, docs) {
     //console.log(docs.length);
     console.log(docs);
 });

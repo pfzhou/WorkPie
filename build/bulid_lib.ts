@@ -1,6 +1,7 @@
 /// <reference path="../typings/node.d.ts"/>
 /// <reference path="../typings/fs-extra.d.ts"/>
 
+
 import path = require('path');
 import fs = require('fs-extra');
 import util = require('util');
@@ -8,20 +9,19 @@ import util = require('util');
 var libPath = '../lib-test';
 var libbakPath = '../lib-bak/';
 var libReadmePath = libbakPath + 'readme.txt';
-var verJson= JSON.parse('{}');
 
 function copyFileToLib(desc:string, sourcePath: string, sourceNames: string[], destNames?: string[])
 {
-  console.log('  2.%d、\t复制%s：\t开始...', num, desc);
+  var ver = getVersion(sourcePath);
+  verJson[desc] = ver;
+  console.log('  2.%d、\t复制%s %s：\t\t开始...', num, desc,ver);
   for(var i = 0; i < sourceNames.length; i++)
   {
     var sourceName = sourceNames[i];
     fs.copySync(sourcePath+sourceNames[i], libbakPath+(destNames==null ? "" : destNames[i]));
   }
 
-  verJson[desc] = getVersion(sourcePath);
-
-  console.log('  2.%d、\t复制%s：\t完成', num, desc);
+  console.log('  2.%d、\t复制%s %s：\t\t完成', num, desc, ver);
   num++
 }
 
@@ -48,12 +48,12 @@ function getVersion(path: string)
 }
 
 //1、删除备份目录
-console.log('1、\t删除备份目录：\t开始...');
+console.log('1、\t删除备份目录：\t\t开始...');
 if(fs.existsSync(libbakPath))
 {
   fs.removeSync(libbakPath);
 }
-console.log('1、\t删除备份目录：\t完成');
+console.log('1、\t删除备份目录：\t\t完成');
 //
 // //2、修改原lib 为lib-bak
 // console.log('2、   备份lib目录：开始...');
@@ -64,13 +64,18 @@ console.log('1、\t删除备份目录：\t完成');
 // console.log('2、   备份lib目录：完成');
 
 //3、复制文件
-console.log('2、\t复制文件：\t开始...');
+console.log('2、\t复制文件：\t\t开始...');
 var num: number = 1;
+var verJson= JSON.parse('{}');
+
 copyFileToLib('medium-editor', '../bower_components/medium-editor/', ['dist/']);
 copyFileToLib('bootstrap', '../bower_components/bootstrap/', ['dist/']);
 copyFileToLib('angular', '../bower_components/angular/',['angular.js', 'angular.min.js'], ['js/angular.js', 'js/angular.min.js']);
-console.log(JSON.stringify(verJson));
+copyFileToLib('angular-route', '../bower_components/angular-route/',['angular-route.js', 'angular-route.min.js'], ['js/angular-route.js', 'js/angular-route.min.js']);
+copyFileToLib('jquery', '../bower_components/jquery/', ['dist/jquery.js', 'dist/jquery.min.js'],['js/jquery.js', 'js/jquery.min.js']);
+copyFileToLib('underscore', '../bower_components/underscore/', ['underscore.js','underscore-min.js'],['js/underscore.js','js/underscore-min.js']);
+copyFileToLib('font-awesome', '../bower_components/font-awesome-4.3.0/', ['css/','fonts/'],['css/','fonts/']);
+
+//写readme文件，记录版本号
 fs.writeFileSync(libReadmePath, JSON.stringify(verJson));
-
-
-console.log('2、   复制文件：\t完成');
+console.log('2、   复制文件：\t\t完成');

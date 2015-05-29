@@ -1,6 +1,6 @@
 {
   "name": "WorkPie",
-  "main": "./index.html",
+  "main": "index.html",
   "description": "WorkPie!",
   "version": "0.1.0",
   "keywords": [

@@ -65,9 +65,9 @@ pre {
 blockquote {
     font-size: 18px;
     display: block;
-    border-top: 1px solid #ccc;
+    /*border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;*/
     border-left: 6px solid #df0d32;
     margin-left: -5px;
     padding-left: 15px;

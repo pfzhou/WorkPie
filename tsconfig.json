@@ -26,6 +26,7 @@
         "./typings/github-electron.d.ts",
         "./typings/jquery.d.ts",
         "./typings/nedb.d.ts",
+        "./typings/node-uuid.d.ts",
         "./typings/node-webkit.d.ts",
         "./typings/node.d.ts",
         "./typings/underscore.d.ts"
