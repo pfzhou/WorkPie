@@ -14,7 +14,12 @@ var appConfig = (function () {
         this.dbFolder = 'db/';
         this.docFolder = 'doc/';
         this.prjFolder = 'prj/';
-        this.dataPath = config['dataPath'] || this.dataPath;
+        if (process.platform != 'darwin') {
+            this.dataPath = config['dataPathWin'] || this.dataPath;
+        }
+        else {
+            this.dataPath = config['dataPathMacOS'] || this.dataPath;
+        }
         this.dbFolder = config['dbFolder'] || this.dbFolder;
         this.docFolder = config['docFolder'] || this.docFolder;
         this.prjFolder = config['prjFolder'] || this.prjFolder;

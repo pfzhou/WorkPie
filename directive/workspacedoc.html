@@ -3,21 +3,20 @@
   <link rel="stylesheet" href="./lib/css/themes/default.css" />
   <link rel="stylesheet" href="./static/css/meditor.css" />
 
-  <div id="container">
+  <div id="container" ng-controller="docController">
     <div class="titlecontainer">
         <h2>
-          <input id="myTitleInput" placeholder="无标题" class="titleinput"
-            ng-model="myTitle"
+          <input id="docTitleInput" placeholder="无标题" class="titleinput"
+            ng-model="docTitle.title"
             ng-show="!show"
             ng-blur="show = true"
             />
           <div class="titlediv"
             ng-show="show"
-            ng-click="show = false">{{myTitle || "无标题"}}</div>
+            ng-click="show = false">{{docTitle.title || "无标题"}}</div>
         </h2>
     </div>
-    <div class="editable">
-
+    <div class="editable" ng-model="docContent">
     </div>
   </div>
 
@@ -32,8 +31,10 @@
           anchorInputPlaceholder: '输入链接地址',
           anchorInputCheckboxLabel: '在新窗口中打开',
     });
+
+    //内容修改事件
     editor.subscribe('editableInput', function (event, editable) {
-        //
+        //...
     });
 
   </script>

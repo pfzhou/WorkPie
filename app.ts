@@ -4,7 +4,6 @@
 /// <reference path="./typings/fs-extra.d.ts"/>
 /// <reference path="./modules/appStorage.ts"/>
 
-
 import path = require('path');
 import fs = require('fs-extra');
 import nw = require('nw.gui');
@@ -20,7 +19,14 @@ class appConfig{
   prjFolder: string = 'prj/';
   constructor(config: Object)
   {
-    this.dataPath = config['dataPath'] || this.dataPath;
+    if (process.platform != 'darwin')
+    {
+      this.dataPath = config['dataPathWin'] || this.dataPath;
+    }
+    else
+    {
+      this.dataPath = config['dataPathMacOS'] || this.dataPath;
+    }
     this.dbFolder = config['dbFolder'] || this.dbFolder;
     this.docFolder = config['docFolder'] || this.docFolder;
     this.prjFolder = config['prjFolder'] || this.prjFolder;

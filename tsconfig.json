@@ -17,7 +17,9 @@
     "files": [
         "./app.ts",
         "./build/bulid_lib.ts",
+        "./controllers/docController.ts",
         "./controllers/leftController.ts",
+        "./controllers/workspaceController.ts",
         "./directive/workspaceDirective.ts",
         "./modules/appStorage.ts",
         "./temp/nedbtest.ts",

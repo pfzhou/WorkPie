@@ -14,11 +14,13 @@
   <script src="./directive/commonDirective.js"></script>
   <script src="./directive/workspaceDirective.js"></script>
   <script src="./app.js"></script>
+  <script src="./controllers/workspaceController.js"></script>
   <script src="./controllers/leftController.js"></script>
+  <script src="./controllers/docController.js"></script>
 </head>
 
 <body>
-  <workspace>
+  <workspace ng-controller="workspaceController">
     <workspaceleft class="workspaceleft">
     </workspaceleft>
     <workspacelist class="workspacelist">

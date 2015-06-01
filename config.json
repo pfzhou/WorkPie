@@ -1,5 +1,6 @@
 {
-  "dataPath": "D:/@MyData/Dropbox/AppData/Desktop/WorkPie/",
+  "dataPathWin": "D:/@MyData/Dropbox/AppData/Desktop/WorkPie/",
+  "dataPathMacOS": "/zpf/Dropbox/AppData/Desktop/WorkPie/",
   "dbFolder": "db/",
   "docFolder": "doc/",
   "prjFolder": "prj/"
