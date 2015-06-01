@@ -9,6 +9,8 @@ import util = require('util');
 var libPath = '../lib-test';
 var libbakPath = '../lib-bak/';
 var libReadmePath = libbakPath + 'readme.txt';
+var num: number = 1;
+var verJson= JSON.parse('{}');
 
 function copyFileToLib(desc:string, sourcePath: string, sourceNames: string[], destNames?: string[])
 {
@@ -65,8 +67,6 @@ console.log('1、\t删除备份目录：\t\t完成');
 
 //3、复制文件
 console.log('2、\t复制文件：\t\t开始...');
-var num: number = 1;
-var verJson= JSON.parse('{}');
 
 copyFileToLib('medium-editor', '../bower_components/medium-editor/', ['dist/']);
 copyFileToLib('bootstrap', '../bower_components/bootstrap/', ['dist/']);

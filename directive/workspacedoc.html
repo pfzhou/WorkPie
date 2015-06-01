@@ -1,7 +1,7 @@
 <div>
   <link rel="stylesheet" href="./lib/css/medium-editor.css" />
   <link rel="stylesheet" href="./lib/css/themes/default.css" />
-  <link rel="stylesheet" href="./resources/css/meditor.css" />
+  <link rel="stylesheet" href="./static/css/meditor.css" />
 
   <div id="container">
     <div class="titlecontainer">
@@ -17,7 +17,7 @@
         </h2>
     </div>
     <div class="editable">
-      
+
     </div>
   </div>
 
@@ -32,6 +32,10 @@
           anchorInputPlaceholder: '输入链接地址',
           anchorInputCheckboxLabel: '在新窗口中打开',
     });
+    editor.subscribe('editableInput', function (event, editable) {
+        //
+    });
+
   </script>
 
 </div>

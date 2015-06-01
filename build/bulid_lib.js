@@ -4,6 +4,8 @@ var fs = require('fs-extra');
 var libPath = '../lib-test';
 var libbakPath = '../lib-bak/';
 var libReadmePath = libbakPath + 'readme.txt';
+var num = 1;
+var verJson = JSON.parse('{}');
 function copyFileToLib(desc, sourcePath, sourceNames, destNames) {
     var ver = getVersion(sourcePath);
     verJson[desc] = ver;
@@ -48,8 +50,6 @@ console.log('1、\t删除备份目录：\t\t完成');
 // console.log('2、   备份lib目录：完成');
 //3、复制文件
 console.log('2、\t复制文件：\t\t开始...');
-var num = 1;
-var verJson = JSON.parse('{}');
 copyFileToLib('medium-editor', '../bower_components/medium-editor/', ['dist/']);
 copyFileToLib('bootstrap', '../bower_components/bootstrap/', ['dist/']);
 copyFileToLib('angular', '../bower_components/angular/', ['angular.js', 'angular.min.js'], ['js/angular.js', 'js/angular.min.js']);
