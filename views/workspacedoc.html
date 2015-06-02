@@ -7,16 +7,16 @@
     <div class="titlecontainer">
         <h2>
           <input id="docTitleInput" placeholder="无标题" class="titleinput"
-            ng-model="docTitle.title"
+            ng-model="docEditor.title"
             ng-show="!show"
             ng-blur="show = true"
             />
           <div class="titlediv"
             ng-show="show"
-            ng-click="show = false">{{docTitle.title || "无标题"}}</div>
+            ng-click="show = false">{{docEditor.title || "无标题"}}</div>
         </h2>
     </div>
-    <div class="editable" ng-model="docContent">
+    <div class="editable" doceditor>
     </div>
   </div>
 

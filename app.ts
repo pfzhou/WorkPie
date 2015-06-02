@@ -1,15 +1,9 @@
-/// <reference path="./typings/angular.d.ts"/>
-/// <reference path="./typings/node-webkit.d.ts"/>
-/// <reference path="./typings/node.d.ts"/>
-/// <reference path="./typings/fs-extra.d.ts"/>
-/// <reference path="./modules/appStorage.ts"/>
-
 import path = require('path');
 import fs = require('fs-extra');
 import nw = require('nw.gui');
 import storage = require('./modules/appStorage');
 
-var workpieApp = angular.module('workpieApp', ['commonDirective', 'workspaceDirective']);
+ var workpieApp = angular.module('workpieApp', ['commonDirective', 'workspaceDirective']);
 
 // 全局配置
 class appConfig{
@@ -17,8 +11,9 @@ class appConfig{
   dbFolder: string = 'db/';
   docFolder: string = 'doc/';
   prjFolder: string = 'prj/';
-  constructor(config: Object)
+  constructor(configFile: string)
   {
+    var config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
     if (process.platform != 'darwin')
     {
       this.dataPath = config['dataPathWin'] || this.dataPath;
@@ -30,10 +25,11 @@ class appConfig{
     this.dbFolder = config['dbFolder'] || this.dbFolder;
     this.docFolder = config['docFolder'] || this.docFolder;
     this.prjFolder = config['prjFolder'] || this.prjFolder;
+    console.log('操作系统：', process.platform);
   }
 }
-var config: appConfig = new appConfig(JSON.parse(fs.readFileSync('config.json', 'utf-8')));
-console.log('全局配置：', config);
+var workpieConfig: appConfig = new appConfig('config.json');
+console.log('全局配置：', workpieConfig);
 
 //workdoc db
-var wdDb = new storage.database(config.dataPath + config.dbFolder, 'workdoc');
+var wdDb = new storage.database(workpieConfig.dataPath + workpieConfig.dbFolder, 'workdoc');

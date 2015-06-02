@@ -1,7 +1,5 @@
 /// <reference path="../typings/angular.d.ts"/>
-/// <reference path="../app.ts"/>
-//import app = require('../app');
-//var workpieApp = app.workpieApp;
+/// <reference path="../typings/app.d.ts"/>
 workpieApp.controller('leftController', function ($scope) {
     $scope.savedoc = function () {
         console.log(editor.serialize());

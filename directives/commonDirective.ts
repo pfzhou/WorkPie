@@ -7,7 +7,7 @@ commonDirective.directive('script', function() {
       scope: false,
       link: function(scope, elem, attr)
       {
-        if (attr.type==='text/javascript-lazy')
+        if (attr['type'] === 'text/javascript-lazy')
         {
           var s = document.createElement("script");
           s.type = "text/javascript";

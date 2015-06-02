@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>ng-model directive</title>
-    <script src="./bower_components/angularjs/angular.js"></script>
+    <script src="../lib/js/angular.js"></script>
     <script>
         var myApp = angular.module('myApp', []);
 
@@ -58,7 +58,8 @@
     </script>
 </head>
 <body ng-controller="bodyController">
-  {{greeting.name}}
+  greeting.name = {{greeting.name}}
+  <br />
   myName = <input ng-model="user1.name"><p />
   <div ng-controller="CounterCtrl">
     count = <sapn ng-model="counter">{{counter}}</span><p />
@@ -72,7 +73,7 @@
   <div ng-controller="HelloController">
       <p>双向绑定</p>
       <input ng-model="greeting.name"  ng-change="change(greeting);" />
-      <p>Hello {{greeting.name || "World"}}, {{user1.name}}</p>
+      <p>Hello {{greeting.name || "World"}}, user1.name = {{user1.name}}</p>
       <button ng-click="init()">重置</button>
       <hr>
   </div>
@@ -86,8 +87,8 @@
       <option value="name">Alphabetical</option>
       <option value="age">Newest</option>
     </select>
-  
-  
+
+
     <ul class="phones">
       <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
         <span>{{phone.name}}</span>
