@@ -1,4 +1,5 @@
 
+//全局的app对象实例
 declare var workpieApp: angular.IModule;
 
 interface appConfig{
@@ -8,6 +9,6 @@ interface appConfig{
   prjFolder: string;
   constructor(configFile: string);
 }
-declare var workpieConfig: appConfig;
 
-declare var editor: any;
+//应用配置文件对象实例
+declare var workpieConfig: appConfig;

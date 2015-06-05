@@ -33,11 +33,13 @@
     <script>
     var elements = document.querySelectorAll('.editable');
     var editor = new MediumEditor(elements, {
-    // var editor = new MediumEditor(".editable", {
+      // var editor = new MediumEditor(".editable", {
           buttons: ['bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull','orderedlist', 'unorderedlist', 'pre', 'removeFormat', 'outdent', 'indent', 'header1', 'header2'],
           buttonLabels: 'fontawesome'
           //anchorTarget: false,
         });
+        console.log(editor.elements[0]);
+        editor.elements[0].innerHTML = '<p>asdfasfdsdf</p>';
         // cssLink = document.getElementById('medium-editor-theme');
         //
         // document.getElementById('sel-themes').addEventListener('change', function () {

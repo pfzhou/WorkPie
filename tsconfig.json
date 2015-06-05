@@ -23,6 +23,7 @@
         "./directives/commonDirective.ts",
         "./directives/workspaceDirective.ts",
         "./modules/appStorage.ts",
+        "./modules/docEditor.ts",
         "./temp/nedbtest.ts",
         "./typings/angular.d.ts",
         "./typings/app.d.ts",
