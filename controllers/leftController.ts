@@ -1,5 +1,7 @@
+//import appEditor = require('../modules/appEditor');
+
 workpieApp.controller('leftController',function($scope) {
   $scope.savedoc = function(){
-    saveEditorContent(editor.serialize());
+    appEditor.DocEditor.saveEditorContent();
   };
 });

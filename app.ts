@@ -3,7 +3,7 @@ import fs = require('fs-extra');
 import nw = require('nw.gui');
 import storage = require('./modules/appStorage');
 
- var workpieApp = angular.module('workpieApp', ['commonDirective', 'workspaceDirective']);
+var workpieApp = angular.module('workpieApp', ['commonDirective', 'workspaceDirective']);
 
 // 全局配置
 class appConfig{

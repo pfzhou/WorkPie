@@ -56,3 +56,19 @@ body {
 .i-active {
   color:#fff;
 }
+
+.notification-icon .badge {
+    top: 2px;
+    right:2px;
+    position: absolute;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: lighter;
+    display: block;
+    float:right;
+}
+.notification-icon{
+  display: block;
+  position: relative;
+}

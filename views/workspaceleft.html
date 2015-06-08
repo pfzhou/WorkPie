@@ -1,30 +1,15 @@
-<style>
-  .notification-icon .badge {
-      top: 2px;
-      right:2px;
-      position: absolute;
-      font-size: 12px;
-      padding-left: 5px;
-      padding-right: 5px;
-      font-weight: lighter;
-      display: block;
-      float:right;
-  }
-  .notification-icon{
-    display: block;
-    position: relative;
-  }
-</style>
 <div ng-controller='leftController' >
   <div class="notification-icon">
     <a class="btn" href="#">
       <i class="fa fa-home fa-2x i-active"></i>
-    </a><span class="badge progress-bar-danger">99</span>
+    </a>
+    <!-- <span class="badge progress-bar-danger">9</span> -->
   </div>
   <div class="notification-icon">
     <a class="btn" href="#">
       <i class="fa fa-book fa-2x i-btn"></i>
-    </a><span class="badge progress-bar-danger">9</span>
+    </a>
+    <!-- <span class="badge progress-bar-danger">99+</span> -->
   </div>
   <div class="notification-icon">
     <a class="btn" href="#">
@@ -34,7 +19,8 @@
   <div class="notification-icon">
     <a class="btn" href="#">
       <i class="fa fa-cog fa-2x i-btn"></i>
-    </a><span class="badge">9</span>
+    </a>
+    <!-- <span class="badge">9</span> -->
   </div>
   <div class="notification-icon">
     <a class="btn" href="#" ng-click='savedoc();'>
