@@ -1,9 +1,9 @@
 import path = require('path');
 import fs = require('fs-extra');
 import nw = require('nw.gui');
-import storage = require('./modules/appStorage');
+'use strick';
 
-var workpieApp = angular.module('workpieApp', ['commonDirective', 'workspaceDirective']);
+var workpieApp = angular.module('workpieApp', ['ngSanitize', 'commonDirective', 'workspaceDirective']);
 
 // 全局配置
 class appConfig{
@@ -31,5 +31,5 @@ class appConfig{
 var workpieConfig: appConfig = new appConfig('config.json');
 console.log('全局配置：', workpieConfig);
 
-//workdoc db
+import storage = require('./modules/appStorage');
 var wdDb = new storage.database(workpieConfig.dataPath + workpieConfig.dbFolder, 'workdoc');

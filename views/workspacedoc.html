@@ -10,13 +10,14 @@
             ng-model="docEditor.title"
             ng-show="!show"
             ng-blur="show = true"
+            ng-change="changeTitle();"
             />
           <div class="titlediv"
             ng-show="show"
             ng-click="show = false">{{docEditor.title || "无标题"}}</div>
         </h2>
     </div>
-    <div class="editable" doceditor>
+    <div class="editable" ng-bind-html="docEditor.content">
     </div>
   </div>
 

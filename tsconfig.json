@@ -5,7 +5,7 @@
         "module": "commonjs",
         "declaration": false,
         "noImplicitAny": false,
-        "removeComments": false,
+        "removeComments": true,
         "noLib": false,
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true
@@ -27,6 +27,7 @@
         "./temp/nedbtest.ts",
         "./typings/angular.d.ts",
         "./typings/app.d.ts",
+        "./typings/async.d.ts",
         "./typings/fs-extra.d.ts",
         "./typings/github-electron-main.d.ts",
         "./typings/github-electron-renderer.d.ts",

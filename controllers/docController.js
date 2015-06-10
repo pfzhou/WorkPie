@@ -1,14 +1,15 @@
-workpieApp.controller('docController', function ($scope) {
+workpieApp.controller('docController', function ($scope, $sce) {
+    'use strick';
     $scope.docEditor = {};
     $scope.docEditor.title = '';
     $scope.docEditor.content = '';
-    //console.log($scope.docEditor.title);
-    //console.log($scope.docEditor.content);
-    // var watch = $scope.$watch($scope.docEditor.content, function(newValue,oldValue, scope){
-    //         console.log(newValue);
-    //         console.log(oldValue);
-    // });
-    // $scope.savedoc = function(){
-    //   console.log(editor.serialize());
-    // };
+    $scope.changeTitle = function () {
+        if (!WorkPie.Editor.DocEditor.docInfo) {
+            if (WorkPie.Editor.DocEditor.docInfo == null) {
+                WorkPie.Editor.DocEditor.docInfo = new WorkPie.Editor.DocInfo();
+            }
+        }
+        WorkPie.Editor.DocEditor.docInfo.title = $scope.docEditor.title;
+        WorkPie.Editor.DocEditor.docInfo.modifyTime = new Date();
+    };
 });

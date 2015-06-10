@@ -72,6 +72,7 @@ copyFileToLib('medium-editor', '../bower_components/medium-editor/', ['dist/']);
 copyFileToLib('bootstrap', '../bower_components/bootstrap/', ['dist/']);
 copyFileToLib('angular', '../bower_components/angular/',['angular.js', 'angular.min.js'], ['js/angular.js', 'js/angular.min.js']);
 copyFileToLib('angular-route', '../bower_components/angular-route/',['angular-route.js', 'angular-route.min.js'], ['js/angular-route.js', 'js/angular-route.min.js']);
+copyFileToLib('angular-sanitize', '../bower_components/angular-sanitize/',['angular-sanitize.js', 'angular-sanitize.min.js'], ['js/angular-sanitize.js', 'js/angular-sanitize.min.js']);
 copyFileToLib('jquery', '../bower_components/jquery/', ['dist/jquery.js', 'dist/jquery.min.js'],['js/jquery.js', 'js/jquery.min.js']);
 copyFileToLib('underscore', '../bower_components/underscore/', ['underscore.js','underscore-min.js'],['js/underscore.js','js/underscore-min.js']);
 copyFileToLib('font-awesome', '../bower_components/font-awesome-4.3.0/', ['css/','fonts/'],['css/','fonts/']);

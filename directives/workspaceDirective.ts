@@ -1,5 +1,3 @@
-/// <reference path="../typings/angular.d.ts"/>
-
 //定义工作桌面的指令
 var workspaceDirective = angular.module('workspaceDirective', []);
 //主工作桌面
@@ -42,6 +40,8 @@ workspaceDirective.directive('doceditor', function () {
           //   scope.$apply(function(){
           //     // Show message
           //     //scope.saving = true;
+          //     console.log(element);
+          //     console.log(attrs);
           //     console.log('saving.....');
           //     if(oldContentHtml !== element.html())
           //     {
