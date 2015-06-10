@@ -27,7 +27,6 @@ var WorkPie;
                         angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
                         angular.element('.titleinput').scope().$apply();
                         var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
-                        debugger;
                         if (fs.existsSync(docPath)) {
                             console.log('读取文档内容文件： ' + docPath);
                             var contentJson = fs.readJSONSync(docPath);
@@ -38,6 +37,8 @@ var WorkPie;
                             console.log('文档内容加载成功。');
                         }
                         else {
+                            angular.element('.editable').scope()['docEditor']['content'] = '';
+                            angular.element('.editable').scope().$apply();
                             console.log('文件不存在： ' + docPath);
                         }
                     }
@@ -136,14 +137,22 @@ var WorkPie;
             return AttachmentInfo;
         })();
         Editor.AttachmentInfo = AttachmentInfo;
-        var formatDate = function (date, style) {
+        function formatDate(date, style) {
             var y = date.getFullYear();
             var M = "0" + (date.getMonth() + 1);
             M = M.substring(M.length - 2);
             var d = "0" + date.getDate();
             d = d.substring(d.length - 2);
-            return style.replace('yyyy', y).replace('MM', M).replace('dd', d);
-        };
+            var h = "0" + date.getHours();
+            h = h.substring(h.length - 2);
+            var m = "0" + date.getMinutes();
+            m = m.substring(m.length - 2);
+            var s = "0" + date.getSeconds();
+            s = s.substring(s.length - 2);
+            return style.replace('yyyy', y).replace('MM', M).replace('dd', d).replace('hh', h).replace('mm', m).replace('ss', s);
+        }
+        Editor.formatDate = formatDate;
+        ;
         DocEditor.initEditor();
         DocEditor.editor.subscribe('editableInput', function (event, editable) {
         });

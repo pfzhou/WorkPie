@@ -33,7 +33,6 @@ module WorkPie.Editor{
           angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
           angular.element('.titleinput').scope().$apply();
           var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
-          debugger
           if(fs.existsSync(docPath))
           {
             console.log('读取文档内容文件： ' + docPath);
@@ -48,6 +47,8 @@ module WorkPie.Editor{
           }
           else
           {
+            angular.element('.editable').scope()['docEditor']['content'] = '';
+            angular.element('.editable').scope().$apply();
             console.log('文件不存在： ' + docPath);
           }
         }
@@ -152,13 +153,19 @@ module WorkPie.Editor{
     fileModifyTime: Date = null;    //文件最后修改时间
   }
 
-  var formatDate = function(date, style) {
+  export function formatDate(date, style) {
     var y = date.getFullYear();
     var M = "0" + (date.getMonth() + 1);
     M = M.substring(M.length - 2);
     var d = "0" + date.getDate();
     d = d.substring(d.length - 2);
-    return style.replace('yyyy', y).replace('MM', M).replace('dd', d); //.replace('hh', h).replace('mm', m).replace('ss', s);
+    var h = "0" + date.getHours();
+    h = h.substring(h.length - 2);
+    var m = "0" + date.getMinutes();
+    m = m.substring(m.length - 2);
+    var s = "0" + date.getSeconds();
+    s = s.substring(s.length - 2);
+    return style.replace('yyyy', y).replace('MM', M).replace('dd', d).replace('hh', h).replace('mm', m).replace('ss', s);
   };
 
   DocEditor.initEditor();
