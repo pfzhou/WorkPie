@@ -4,9 +4,8 @@
       <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
   </div>
   <div class="list-group">
-    <a href="#" ng-repeat="doc in docs" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc(this, doc.id);">
-      <strong class="list-group-item-heading" style="font-size: 125%;">{{doc.title}}</strong><span class="badge alert-info">{{doc.attachments.length}}</span>
-      <!-- {{doc.attachments.length > 0 ? '<span class="badge alert-info">'+{{doc.attachments.length}} + '</span>' : ''}} -->
+    <a href="#" ng-repeat="doc in docs" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc(this, doc.id);" doclistitem='{{doc.id}}'>
+      <strong class="list-group-item-heading" style="font-size: 125%;">{{doc.title}}</strong><span class="badge alert-info" ng-if="doc.attachments.length > 0">{{doc.attachments.length}}</span>
       <div>
           <small class="list-group-item-text">{{doc.project}} </small>
           <div style="float:right"> <small class="list-group-item-text">{{getTime(doc.modifyTime)}}</small></div>

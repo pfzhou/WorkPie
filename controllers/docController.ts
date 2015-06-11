@@ -3,17 +3,18 @@ workpieApp.controller('docController',function($scope, $sce) {
   $scope.docEditor = {};
   $scope.docEditor.title = '';
   $scope.docEditor.content = '';//$sce.trustAsHtml('');
-
+  var editor = WorkPie.Editor;
+  
   $scope.changeTitle = function(){
-    if(!WorkPie.Editor.DocEditor.docInfo)
+    if(!editor.DocEditor.docInfo)
     {
-      if(WorkPie.Editor.DocEditor.docInfo == null)
+      if(editor.DocEditor.docInfo == null)
       {
-        WorkPie.Editor.DocEditor.docInfo = new WorkPie.Editor.DocInfo();
+        editor.DocEditor.docInfo = new editor.DocInfo();
       }
     }
-    WorkPie.Editor.DocEditor.docInfo.title = $scope.docEditor.title;
-    WorkPie.Editor.DocEditor.docInfo.modifyTime = new Date();
+    editor.DocEditor.docInfo.title = $scope.docEditor.title;
+    editor.DocEditor.docInfo.modifyTime = new Date();
     //$scope.docEditor.content = $sce.trustAsHtml($scope.docEditor.title);
   };
 });

@@ -105,7 +105,7 @@ var WorkPie;
                 this.path = '/未分类/';
                 this.folderid = '';
                 this.diskpath = '';
-                this.contentFilename = 'content.txt';
+                this.contentFilename = '.content.txt';
                 this.infoFilename = '.info.txt';
                 this.attachments = [];
                 this.tags = [];

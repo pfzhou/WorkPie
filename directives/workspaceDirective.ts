@@ -60,3 +60,26 @@ workspaceDirective.directive('doceditor', function () {
         }
     };
 });
+
+workspaceDirective.directive('doclistitem', function($timeout){
+  return {
+      restrict: 'A',
+      link: function(scope, element,attr){
+        var editor = WorkPie.Editor;
+        scope.$evalAsync(function(){
+               // executes after compile/link
+               // and before render
+        });
+        $timeout(function(){
+               // executes after render
+          //element
+          //console.log('timeout~~~~~~~~~~~~~~~``',editor.DocEditor.docInfo);
+          if(editor.DocEditor.docInfo && (editor.DocEditor.docInfo.id == attr['doclistitem']))
+          {
+            attr.$updateClass('list-group-item active', 'list-group-item');
+          }
+
+        });
+      }
+    }
+});

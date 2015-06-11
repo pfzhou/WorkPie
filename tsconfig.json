@@ -19,7 +19,7 @@
         "./build/bulid_lib.ts",
         "./controllers/docController.ts",
         "./controllers/leftController.ts",
-        "./controllers/listcontroller.ts",
+        "./controllers/listController.ts",
         "./controllers/workspaceController.ts",
         "./directives/commonDirective.ts",
         "./directives/workspaceDirective.ts",

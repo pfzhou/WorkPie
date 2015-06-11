@@ -1,7 +1,19 @@
 workpieApp.controller('listController', function ($scope) {
     'use strick';
     var editor = WorkPie.Editor;
-    $scope.docs = wdDb.db.getAllData();
+    $scope.docs = {};
+    loadList();
+    function loadList() {
+        wdDb.db.find({}).sort({ 'modifyTime': -1 }).exec(function (err, docs) {
+            if (!err) {
+                $scope.docs = docs;
+                $scope.$apply();
+                console.log('找到文档列表，一共有：' + docs.length, docs[0]);
+            }
+            else
+                console.log('加载文档列表出错：' + err);
+        });
+    }
     $scope.loaddoc = function (elm, docid) {
         console.log('加载文档，id = ' + docid, elm);
         editor.DocEditor.loadEditorContent(docid);
@@ -19,7 +31,7 @@ workpieApp.controller('listController', function ($scope) {
             var hourC = diffValue / hour;
             var minC = diffValue / minute;
             var result;
-            if (hourC > 0) {
+            if (hourC >= 1) {
                 result = editor.formatDate(dateTime, 'hh:mm:ss');
             }
             else if (minC >= 1) {

@@ -123,7 +123,7 @@ module WorkPie.Editor{
     path: string = '/未分类/';       //所在项目下的目录位置
     folderid: string = '';          //上级目录的id
     diskpath: string = '';          //磁盘上的存储位置
-    contentFilename: string = 'content.txt';   //内容文件名称
+    contentFilename: string = '.content.txt';   //内容文件名称
     infoFilename: string = '.info.txt';   //内容文件名称
     attachments: AttachmentInfo[] = []; //附件列表
     tags: string[] = [];            //tag列表
