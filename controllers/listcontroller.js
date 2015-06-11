@@ -14,10 +14,16 @@ workpieApp.controller('listController', function ($scope) {
                 console.log('加载文档列表出错：' + err);
         });
     }
+    ;
     $scope.loaddoc = function (elm, docid) {
         console.log('加载文档，id = ' + docid, elm);
         editor.DocEditor.loadEditorContent(docid);
+        loadList();
     };
+    $scope.$on('refreshList', function (event, msg) {
+        console.log('处理refreshList消息。');
+        loadList();
+    });
     $scope.getTime = function (time) {
         return getDateDiff(time);
     };

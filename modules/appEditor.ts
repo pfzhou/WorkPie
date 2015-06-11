@@ -55,7 +55,7 @@ module WorkPie.Editor{
       });
     }
     //保存编辑器内容
-    static saveEditorContent(){
+    static saveEditorContent(scope){
       var docContent: string = this.editor.elements[0].innerHTML;
       if(DocEditor.docInfo == null)
       {
@@ -80,6 +80,8 @@ module WorkPie.Editor{
       console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
       fs.writeFileSync(docPath+DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
       console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
+      console.log('发送docSaved消息。')
+      scope.$emit('docSaved', 'SaveButton');
     }
 
 
