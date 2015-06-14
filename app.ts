@@ -32,4 +32,4 @@ var workpieConfig: appConfig = new appConfig('config.json');
 console.log('全局配置：', workpieConfig);
 
 import storage = require('./modules/appStorage');
-var wdDb = new storage.database(workpieConfig.dataPath + workpieConfig.dbFolder, 'workdoc');
+var wdDb = new storage.database(workpieConfig.dataPath + workpieConfig.dbFolder, 'working');

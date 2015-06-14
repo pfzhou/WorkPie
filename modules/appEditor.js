@@ -73,7 +73,7 @@ var WorkPie;
             };
             DocEditor.getDocInfo = function (docid, callback) {
                 var result = null;
-                wdDb.db.find({ id: docid }, function (error, docs) {
+                wdDb.db.find({ id: docid }).toArray(function (error, docs) {
                     if (error) {
                         console.log('加载文档出错，docid = ' + docid, error);
                         alert('加载文档出错，docid = ' + docid);

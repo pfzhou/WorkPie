@@ -6,7 +6,7 @@ workpieApp.controller('listController',function($scope) {
   loadList();
 
   function loadList(){
-    wdDb.db.find({}).sort({ 'modifyTime': -1 }).exec(function(err, docs) {
+    wdDb.db.find({}).sort({ 'modifyTime': -1 }).toArray(function(err, docs) {
       if(!err)
       {
         $scope.docs = docs;
@@ -70,4 +70,24 @@ workpieApp.controller('listController',function($scope) {
       return editor.formatDate(dateTime, 'yyyy-MM-dd hh:mm');
     }
   }
+});
+
+workpieApp.filter('listFilter', function() {
+  // | listFilter:query:
+    return function(docs, searchText) {
+        //console.log('content: ' + content);
+        var searchRegx = new RegExp(searchText, "i");
+        if((searchText == undefined) || (content.search(searchRegx) != -1))
+        {
+            return docs;
+        }
+        var result = [];
+        for (var i = 0; i < docs.length; i++) {
+            if (docs[i].title.search(searchRegx) != -1 ||
+                docs[i].project.search(searchText) != -1) {
+                result.push(docs[i]);
+            }
+        }
+        return result;
+    }
 });

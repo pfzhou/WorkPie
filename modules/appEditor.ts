@@ -87,7 +87,7 @@ module WorkPie.Editor{
 
     static getDocInfo(docid: string, callback){
       var result: DocInfo = null;
-      wdDb.db.find({id: docid}, function(error, docs){
+      wdDb.db.find({id: docid}).toArray(function(error, docs){
         if(error)
         {
           console.log('加载文档出错，docid = ' + docid, error);

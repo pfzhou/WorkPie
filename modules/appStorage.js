@@ -1,4 +1,4 @@
-var nedb = require('nedb');
+var tingoDB = require('tingodb')().Db;
 'use strick';
 var WorkPie;
 (function (WorkPie) {
@@ -7,12 +7,10 @@ var WorkPie;
         var database = (function () {
             function database(dbPath, dbName) {
                 this.db = null;
-                this.db = new nedb({ filename: dbPath + dbName + '.db' });
-                this.db.loadDatabase(function (err) {
-                    if (err)
-                        console.log(err);
-                });
-                console.log(dbName + ' count = ', this.db);
+                this.workpieDB = null;
+                this.workpieDB = new tingoDB(dbPath, {});
+                this.db = this.workpieDB.collection(dbName + '.db');
+                console.log(dbName + ' = ', this.db);
             }
             return database;
         })();

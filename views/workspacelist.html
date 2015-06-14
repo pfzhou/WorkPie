@@ -1,10 +1,10 @@
 <div class="panel panel-default"  ng-controller="listController">
   <div class="panel-heading"><h4><b>我的文档记录</b></h4></div>
   <div class="panel-body">
-      <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query.title">
   </div>
   <div class="list-group">
-    <a href="#" ng-repeat="doc in docs" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc(this, doc.id);" doclistitem='{{doc.id}}'>
+    <a href="#" ng-repeat="doc in docs | filter:query" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc(this, doc.id);" doclistitem='{{doc.id}}'>
       <strong class="list-group-item-heading" style="font-size: 125%;">{{doc.title}}</strong><span class="badge alert-info" ng-if="doc.attachments.length > 0">{{doc.attachments.length}}</span>
       <div>
           <small class="list-group-item-text">{{doc.project}} </small>
