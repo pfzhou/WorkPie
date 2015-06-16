@@ -18,11 +18,11 @@ workpieApp.controller('listController',function($scope) {
     });
   };
 
-  $scope.loaddoc = function(elm, docid){
-    console.log('加载文档，id = ' + docid, elm);
+  $scope.loaddoc = function(event, docid){
+    console.log('加载文档，id = ' + docid);
     editor.DocEditor.loadEditorContent(docid);
     loadList();
-    //elm.class = 'list-group-item active';
+    //event.target.parentElement.attributes['class'].value = 'list-group-item active';
   };
 
   $scope.$on('refreshList', function(event,msg) {

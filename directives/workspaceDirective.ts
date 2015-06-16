@@ -36,27 +36,29 @@ workspaceDirective.directive('doceditor', function () {
         scope: true,
         link: function(scope, element, attrs) {
           var oldContentHtml = '';
-          // setInterval(function(){
-          //   scope.$apply(function(){
-          //     // Show message
-          //     //scope.saving = true;
-          //     console.log(element);
-          //     console.log(attrs);
-          //     console.log('saving.....');
-          //     if(oldContentHtml !== element.html())
-          //     {
-          //       console.log('doceditor contentHtml: ',element.html());
-          //       oldContentHtml = element.html();
-          //       //todo: 调用保存的接口
-          //     }
-          //     else{
-          //       console.log('nothing change.');
-          //     }
-          //     // Hide saving message
-          //     //scope.saving = false;
-          //     console.log('saved.');
-          //   });
-          // }, 5000);
+          setInterval(function(){
+            scope.$apply(function(){
+              // Show message
+              //scope.saving = true;
+              //console.log(element);
+              //console.log(attrs);
+              var editor = WorkPie.Editor;
+              console.log('saving.....');
+              editor.DocEditor.saveEditorContent(scope);
+              // if(oldContentHtml !== element.html())
+              // {
+              //   console.log('doceditor contentHtml: ',element.html());
+              //   oldContentHtml = element.html();
+              //   //todo: 调用保存的接口
+              // }
+              // else{
+              //   console.log('nothing change.');
+              // }
+              // Hide saving message
+              //scope.saving = false;
+              console.log('saved.');
+            });
+          }, 5000);
         }
     };
 });

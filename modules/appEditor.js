@@ -22,54 +22,67 @@ var WorkPie;
             };
             DocEditor.loadEditorContent = function (docid) {
                 DocEditor.getDocInfo(docid, function (doc) {
-                    DocEditor.docInfo = doc;
-                    if (DocEditor.docInfo) {
+                    if (doc) {
+                        DocEditor.docInfo = doc;
+                        DocEditor.needSave = false;
                         angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
                         angular.element('.titleinput').scope().$apply();
                         var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
                         if (fs.existsSync(docPath)) {
                             console.log('读取文档内容文件： ' + docPath);
                             var contentJson = fs.readJSONSync(docPath);
-                            var docContent = contentJson['content'];
-                            console.log('文档内容： ', docContent);
-                            angular.element('.editable').scope()['docEditor']['content'] = docContent;
-                            angular.element('.editable').scope().$apply();
+                            DocEditor.docContent = contentJson['content'];
+                            console.log('文档内容： ', DocEditor.docContent);
                             console.log('文档内容加载成功。');
                         }
                         else {
-                            angular.element('.editable').scope()['docEditor']['content'] = '';
-                            angular.element('.editable').scope().$apply();
+                            DocEditor.docContent = '';
                             console.log('文件不存在： ' + docPath);
                         }
+                        angular.element('.editable').scope()['docEditor']['content'] = DocEditor.docContent;
+                        angular.element('.editable').scope().$apply();
                     }
                 });
             };
             DocEditor.saveEditorContent = function (scope) {
-                var docContent = this.editor.elements[0].innerHTML;
-                if (DocEditor.docInfo == null) {
-                    DocEditor.docInfo = new DocInfo();
+                if (this.docInfo == null) {
+                    this.docInfo = new DocInfo();
+                    this.needSave = true;
                 }
-                DocEditor.docInfo.contentSize = docContent.length;
-                DocEditor.docInfo.modifyTime = new Date();
-                wdDb.db.update({ id: DocEditor.docInfo.id }, DocEditor.docInfo, { upsert: true }, function (err, numReplaced, upsert) {
-                    if (err)
-                        console.log('保存文档信息到数据库出错', err);
-                    console.log(numReplaced, upsert);
-                });
-                var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath;
-                console.log('准备保存文档内容到：' + docPath);
-                if (!fs.existsSync(docPath)) {
-                    fs.mkdirsSync(docPath);
+                var newContent = this.editor.elements[0].innerHTML;
+                if (this.needSave || this.docInfo.contentSize != newContent.length || this.docContent != newContent) {
+                    this.needSave = true;
+                    this.docInfo.contentSize = newContent.length;
+                    this.docContent = newContent;
+                    this.docInfo.modifyTime = new Date();
+                    wdDb.db.update({ id: this.docInfo.id }, this.docInfo, { upsert: true }, function (err, numReplaced, upsert) {
+                        if (err) {
+                            console.log('保存文档信息到数据库出错', err);
+                            return;
+                        }
+                        console.log(numReplaced, upsert);
+                        var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath;
+                        console.log('准备保存文档内容到：' + docPath);
+                        if (!fs.existsSync(docPath)) {
+                            fs.mkdirsSync(docPath);
+                        }
+                        ;
+                        var contentJson = JSON.parse('{}');
+                        contentJson['content'] = DocEditor.docContent;
+                        contentJson['text'] = DocEditor.editor.elements[0].innerText;
+                        fs.writeFileSync(docPath + DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
+                        console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
+                        fs.writeFileSync(docPath + DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
+                        DocEditor.needSave = false;
+                        console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
+                        console.log('发送docSaved消息。');
+                        if (!scope)
+                            scope = angular.element('.editable').scope();
+                        scope.$emit('docSaved', 'SaveButton');
+                    });
                 }
-                ;
-                var contentJson = JSON.parse('{}');
-                contentJson['content'] = this.editor.elements[0].innerHTML;
-                fs.writeFileSync(docPath + DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
-                console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
-                fs.writeFileSync(docPath + DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
-                console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
-                console.log('发送docSaved消息。');
-                scope.$emit('docSaved', 'SaveButton');
+                else
+                    console.log('文档没有修改，无需保存');
             };
             DocEditor.getDocInfo = function (docid, callback) {
                 var result = null;
@@ -96,6 +109,8 @@ var WorkPie;
             };
             DocEditor.editor = null;
             DocEditor.docInfo = null;
+            DocEditor.docContent = '';
+            DocEditor.needSave = false;
             return DocEditor;
         })();
         Editor.DocEditor = DocEditor;
@@ -157,6 +172,7 @@ var WorkPie;
         ;
         DocEditor.initEditor();
         DocEditor.editor.subscribe('editableInput', function (event, editable) {
+            this.needSave = true;
         });
         DocEditor.editor.subscribe('editableClick', function (event, editable) {
         });

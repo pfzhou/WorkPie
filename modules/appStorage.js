@@ -10,7 +10,6 @@ var WorkPie;
                 this.workpieDB = null;
                 this.workpieDB = new tingoDB(dbPath, {});
                 this.db = this.workpieDB.collection(dbName + '.db');
-                console.log(dbName + ' = ', this.db);
             }
             return database;
         })();

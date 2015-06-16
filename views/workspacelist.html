@@ -6,7 +6,7 @@
       <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query.title">
   </div>
   <div class="list-group doc-list">
-    <a href="#" ng-repeat="doc in docs | filter:query" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc(this, doc.id);" doclistitem='{{doc.id}}'>
+    <a href="#" ng-repeat="doc in docs | filter:query" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc($event, doc.id);" doclistitem='{{doc.id}}'>
       <strong class="list-group-item-heading" style="font-size: 125%;">{{doc.title}}</strong><span class="badge alert-info" ng-if="doc.attachments.length > 0">{{doc.attachments.length}}</span>
       <div>
           <small class="list-group-item-text">{{doc.project}} </small>

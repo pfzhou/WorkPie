@@ -10,6 +10,8 @@ module WorkPie.Editor{
     //编辑器对象实例
     static editor: any = null;
     private static docInfo: DocInfo = null;
+    private static docContent: string = '';
+    private static needSave: boolean = false;
     //初始化编辑器
     static initEditor(){
       var elements = document.querySelectorAll('.editable');
@@ -27,9 +29,10 @@ module WorkPie.Editor{
     //根据docid加载文档数据
     static loadEditorContent(docid: string){
       DocEditor.getDocInfo(docid, function(doc){
-        DocEditor.docInfo = doc;
-        if(DocEditor.docInfo)
+        if(doc)
         {
+          DocEditor.docInfo = doc;
+          DocEditor.needSave = false;
           angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
           angular.element('.titleinput').scope().$apply();
           var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
@@ -37,54 +40,67 @@ module WorkPie.Editor{
           {
             console.log('读取文档内容文件： ' + docPath);
             var contentJson = fs.readJSONSync(docPath);
-            var docContent = contentJson['content'];
-            console.log('文档内容： ', docContent);
-            //设置编辑器的文档内容（包含html格式的）
-            //DocEditor.editor.elements[0].innerHTML = docContent;
-            angular.element('.editable').scope()['docEditor']['content'] = docContent;
-            angular.element('.editable').scope().$apply();
+            DocEditor.docContent = contentJson['content'];
+            console.log('文档内容： ', DocEditor.docContent);
             console.log('文档内容加载成功。');
           }
           else
           {
-            angular.element('.editable').scope()['docEditor']['content'] = '';
-            angular.element('.editable').scope().$apply();
+            DocEditor.docContent = '';
             console.log('文件不存在： ' + docPath);
           }
+          angular.element('.editable').scope()['docEditor']['content'] = DocEditor.docContent;
+          angular.element('.editable').scope().$apply();
         }
       });
     }
+
     //保存编辑器内容
     static saveEditorContent(scope){
-      var docContent: string = this.editor.elements[0].innerHTML;
-      if(DocEditor.docInfo == null)
+      if(this.docInfo == null)
       {
-        DocEditor.docInfo = new DocInfo();
+        this.docInfo = new DocInfo();
+        this.needSave = true;
       }
-      DocEditor.docInfo.contentSize = docContent.length;
-      DocEditor.docInfo.modifyTime = new Date();
-      wdDb.db.update({id: DocEditor.docInfo.id}, DocEditor.docInfo, {upsert: true}, function(err, numReplaced, upsert){
-        if(err)
-          console.log('保存文档信息到数据库出错', err);
-        console.log(numReplaced, upsert);
-      })
-      var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath;
-      console.log('准备保存文档内容到：' + docPath);
-      if(!fs.existsSync(docPath)){
-        fs.mkdirsSync(docPath);
-      };
-      var contentJson = JSON.parse('{}');
-      contentJson['content'] = this.editor.elements[0].innerHTML;
+      var newContent: string = this.editor.elements[0].innerHTML;
+      if(this.needSave || this.docInfo.contentSize != newContent.length || this.docContent != newContent)
+      {
+        this.needSave = true;
+        this.docInfo.contentSize = newContent.length;
+        this.docContent = newContent;
+        this.docInfo.modifyTime = new Date();
+        wdDb.db.update({id: this.docInfo.id}, this.docInfo, {upsert: true}, function(err, numReplaced, upsert){
+          if(err)
+          {
+            console.log('保存文档信息到数据库出错', err);
+            return;
+          }
+          console.log(numReplaced, upsert);
+          var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath;
+          console.log('准备保存文档内容到：' + docPath);
+          if(!fs.existsSync(docPath)){
+            fs.mkdirsSync(docPath);
+          };
+          var contentJson = JSON.parse('{}');
+          contentJson['content'] = DocEditor.docContent;
+          contentJson['text'] = DocEditor.editor.elements[0].innerText;
 
-      fs.writeFileSync(docPath+DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
-      console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
-      fs.writeFileSync(docPath+DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
-      console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
-      console.log('发送docSaved消息。')
-      scope.$emit('docSaved', 'SaveButton');
+          fs.writeFileSync(docPath+DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
+          console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
+          fs.writeFileSync(docPath+DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
+          DocEditor.needSave = false;
+          console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
+          console.log('发送docSaved消息。');
+          if(!scope)
+            scope = angular.element('.editable').scope();
+          scope.$emit('docSaved', 'SaveButton');
+        })
+      }
+      else
+        console.log('文档没有修改，无需保存');
     }
 
-
+    //获取文档信息
     static getDocInfo(docid: string, callback){
       var result: DocInfo = null;
       wdDb.db.find({id: docid}).toArray(function(error, docs){
@@ -175,6 +191,7 @@ module WorkPie.Editor{
   //内容修改事件
   DocEditor.editor.subscribe('editableInput', function (event, editable) {
       //console.log(event.target.innerHTML, event.srcElement.innerHTML);
+      this.needSave = true;
   });
 
   //进入编辑状态事件

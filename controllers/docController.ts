@@ -4,7 +4,7 @@ workpieApp.controller('docController',function($scope, $sce) {
   $scope.docEditor.title = '';
   $scope.docEditor.content = '';//$sce.trustAsHtml('');
   var editor = WorkPie.Editor;
-  
+
   $scope.changeTitle = function(){
     if(!editor.DocEditor.docInfo)
     {
@@ -15,6 +15,7 @@ workpieApp.controller('docController',function($scope, $sce) {
     }
     editor.DocEditor.docInfo.title = $scope.docEditor.title;
     editor.DocEditor.docInfo.modifyTime = new Date();
+    editor.DocEditor.needSave = true;
     //$scope.docEditor.content = $sce.trustAsHtml($scope.docEditor.title);
   };
 });

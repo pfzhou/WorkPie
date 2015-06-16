@@ -30,6 +30,14 @@ workspaceDirective.directive('doceditor', function () {
         scope: true,
         link: function (scope, element, attrs) {
             var oldContentHtml = '';
+            setInterval(function () {
+                scope.$apply(function () {
+                    var editor = WorkPie.Editor;
+                    console.log('saving.....');
+                    editor.DocEditor.saveEditorContent(scope);
+                    console.log('saved.');
+                });
+            }, 5000);
         }
     };
 });

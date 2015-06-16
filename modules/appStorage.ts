@@ -11,12 +11,6 @@ module WorkPie.Storage{
     {
       this.workpieDB = new tingoDB(dbPath, {});
       this.db = this.workpieDB.collection(dbName + '.db');
-      // this.db.loadDatabase(function (err) {    // Callback is optional
-      //   if(err)
-      //     console.log(err);
-      // });
-      console.log(dbName + ' = ', this.db);
-      //new nedb({filename: dbPath + dbName + '.db'})
     }
   }
 }

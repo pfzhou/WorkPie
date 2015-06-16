@@ -15,8 +15,8 @@ workpieApp.controller('listController', function ($scope) {
         });
     }
     ;
-    $scope.loaddoc = function (elm, docid) {
-        console.log('加载文档，id = ' + docid, elm);
+    $scope.loaddoc = function (event, docid) {
+        console.log('加载文档，id = ' + docid);
         editor.DocEditor.loadEditorContent(docid);
         loadList();
     };
