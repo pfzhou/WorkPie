@@ -5,7 +5,8 @@
 
   <div id="container" ng-controller="docController">
     <div class="titlecontainer">
-        <h2>
+        <!-- <h2> -->
+        <strong style="font-size: 200%;">
           <input id="docTitleInput" placeholder="无标题" class="titleinput"
             ng-model="docEditor.title"
             ng-show="!show"
@@ -15,9 +16,60 @@
           <div class="titlediv"
             ng-show="show"
             ng-click="show = false">{{docEditor.title || "无标题"}}</div>
-        </h2>
+          </strong>
+        <!-- </h2> -->
     </div>
     <div class="editable" ng-bind-html="docEditor.content" doceditor>
+    </div>
+    <div class="filelist">
+      <table class="table">
+      <thead>
+        <tr>
+          <th style='width: 10px'>#</th>
+          <th style='width: 300px'>文件名</th>
+          <th style='width: 80px'>大小</th>
+          <th style='width: 150px'>最后修改时间</th>
+          <th style='width: 150px'>添加时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">30</th>
+          <td><i class="fa fa-file-excel-o fa-lg" style="float: left;"></i>Larry</td>
+          <td>300M</td>
+          <td>06:09</td>
+          <td>11月11日 06:09</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>3.25M</td>
+          <td>5分钟前</td>
+          <td>11月11日 06:09</td>
+        </tr>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>3M</td>
+          <td>15-11-11 06:09</td>
+          <td>15-11-11 06:09</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>336.7K</td>
+          <td>15年11月11日 06:09</td>
+          <td>15年11月11日 06:09</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>11月11日 06:09</td>
+          <td>11月11日 06:09</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
