@@ -15,7 +15,6 @@ workpieApp.controller('docController',function($scope, $sce) {
     }
     editor.DocEditor.docInfo.title = $scope.docEditor.title;
     editor.DocEditor.docInfo.modifyTime = new Date();
-    editor.DocEditor.needSave = true;
-    //$scope.docEditor.content = $sce.trustAsHtml($scope.docEditor.title);
+    editor.DocEditor.infoChanged = true;
   };
 });

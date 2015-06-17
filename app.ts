@@ -3,11 +3,32 @@ import fs = require('fs-extra');
 import nw = require('nw.gui');
 'use strick';
 
+var win = nw.Window.get();
+var tray = new nw.Tray({ title: nw.App.manifest["window"]["title"], icon: nw.App.manifest["window"]["icon"] });
+tray.tooltip = 'Open WorkPie';
+
+var isShowWindow = true;
+//tray.menu = menu;
+//click事件
+tray.on('click',function(){
+  if(isShowWindow)
+  {
+    win.hide();
+    isShowWindow = false;
+  }
+  else
+  {
+    win.show();
+    isShowWindow = true;
+  }
+});
+
+//注册Angular Modules
 var workpieApp = angular.module('workpieApp', ['ngSanitize', 'commonDirective', 'workspaceDirective']);
 
 // 全局配置
 class appConfig{
-  dataPath: string = nw.App.manifest["dataPath"];
+  dataPath: string = '';
   dbFolder: string = 'db/';
   docFolder: string = 'doc/';
   prjFolder: string = 'prj/';

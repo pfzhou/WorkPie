@@ -9,13 +9,14 @@
     "GTD",
     "Notes"
   ],
-  "dataPath": "D:/@MyData/Dropbox/AppData/Desktop/WorkPie/",
   "window": {
     "title": "WorkPie",
     "toolbar": true,
     "width": 1080,
     "height": 700,
-    "frame": true
+    "frame": true,
+    "show_in_taskbar": true,
+    "icon": "icon.png"
   },
   "dependencies": {
     "async": "^1.2.1",

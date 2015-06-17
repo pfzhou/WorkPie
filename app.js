@@ -1,10 +1,24 @@
 var fs = require('fs-extra');
 var nw = require('nw.gui');
 'use strick';
+var win = nw.Window.get();
+var tray = new nw.Tray({ title: nw.App.manifest["window"]["title"], icon: nw.App.manifest["window"]["icon"] });
+tray.tooltip = 'Open WorkPie';
+var isShowWindow = true;
+tray.on('click', function () {
+    if (isShowWindow) {
+        win.hide();
+        isShowWindow = false;
+    }
+    else {
+        win.show();
+        isShowWindow = true;
+    }
+});
 var workpieApp = angular.module('workpieApp', ['ngSanitize', 'commonDirective', 'workspaceDirective']);
 var appConfig = (function () {
     function appConfig(configFile) {
-        this.dataPath = nw.App.manifest["dataPath"];
+        this.dataPath = '';
         this.dbFolder = 'db/';
         this.docFolder = 'doc/';
         this.prjFolder = 'prj/';

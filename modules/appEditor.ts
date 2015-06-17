@@ -11,7 +11,8 @@ module WorkPie.Editor{
     static editor: any = null;
     private static docInfo: DocInfo = null;
     private static docContent: string = '';
-    private static needSave: boolean = false;
+    static infoChanged: boolean = false;
+    static contentChanged: boolean = false;
     //初始化编辑器
     static initEditor(){
       var elements = document.querySelectorAll('.editable');
@@ -31,8 +32,10 @@ module WorkPie.Editor{
       DocEditor.getDocInfo(docid, function(doc){
         if(doc)
         {
+          DocEditor.infoChanged = false;
+          DocEditor.contentChanged = false;
+
           DocEditor.docInfo = doc;
-          DocEditor.needSave = false;
           angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
           angular.element('.titleinput').scope().$apply();
           var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
@@ -57,15 +60,15 @@ module WorkPie.Editor{
 
     //保存编辑器内容
     static saveEditorContent(scope){
-      if(this.docInfo == null)
+      if(this.docInfo == null && (this.infoChanged || this.contentChanged))
       {
         this.docInfo = new DocInfo();
-        this.needSave = true;
+        this.infoChanged = true;
       }
-      var newContent: string = this.editor.elements[0].innerHTML;
-      if(this.needSave || this.docInfo.contentSize != newContent.length || this.docContent != newContent)
+
+      if(this.infoChanged || this.contentChanged)
       {
-        this.needSave = true;
+        var newContent: string = this.editor.elements[0].innerHTML;
         this.docInfo.contentSize = newContent.length;
         this.docContent = newContent;
         this.docInfo.modifyTime = new Date();
@@ -81,14 +84,15 @@ module WorkPie.Editor{
           if(!fs.existsSync(docPath)){
             fs.mkdirsSync(docPath);
           };
-          var contentJson = JSON.parse('{}');
-          contentJson['content'] = DocEditor.docContent;
-          contentJson['text'] = DocEditor.editor.elements[0].innerText;
+          var docInfoClone = JSON.parse(JSON.stringify(DocEditor.docInfo));
+          docInfoClone['content'] = DocEditor.docContent;
+          docInfoClone['text'] = DocEditor.editor.elements[0].innerText;
 
-          fs.writeFileSync(docPath+DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
+          fs.writeFileSync(docPath+DocEditor.docInfo.contentFilename, angular.toJson(docInfoClone));
           console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
-          fs.writeFileSync(docPath+DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
-          DocEditor.needSave = false;
+
+          DocEditor.infoChanged = false;
+          DocEditor.contentChanged = false;
           console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
           console.log('发送docSaved消息。');
           if(!scope)
@@ -142,7 +146,6 @@ module WorkPie.Editor{
     folderid: string = '';          //上级目录的id
     diskpath: string = '';          //磁盘上的存储位置
     contentFilename: string = '.content.txt';   //内容文件名称
-    infoFilename: string = '.info.txt';   //内容文件名称
     attachments: AttachmentInfo[] = []; //附件列表
     tags: string[] = [];            //tag列表
     contentSize: number = 0;        //内容大小
@@ -191,7 +194,7 @@ module WorkPie.Editor{
   //内容修改事件
   DocEditor.editor.subscribe('editableInput', function (event, editable) {
       //console.log(event.target.innerHTML, event.srcElement.innerHTML);
-      this.needSave = true;
+      DocEditor.contentChanged = true;
   });
 
   //进入编辑状态事件
@@ -203,6 +206,41 @@ module WorkPie.Editor{
   DocEditor.editor.subscribe('editableBlur', function (event, editable) {
       //console.log('end edit.');
   });
+
+  //文件拖拽支持
+  var holder = document.getElementById('container');
+  holder.ondragover = function () {
+    // this.className = 'hover';
+    return false;
+  };
+  holder.ondragleave = holder.ondragend = function () {
+    // this.className = '';
+    return false;
+  };
+  holder.ondrop = function (e) {
+    // this.className = '';
+    e.preventDefault();
+
+    var fs = require('fs-extra');
+    var path = require('path');
+
+    // var message = document.getElementById('message');
+    // message.innerText = '文件复制中...';
+    var message = '';
+    for(var i =0; i< e.dataTransfer.files.length; i++)
+    {
+      var file = e.dataTransfer.files[i];
+      var filename = path.basename(file.path);
+      var desc = 'D:/@MyData/Dropbox/AppData/Desktop/WorkPie/' + filename;
+      console.log('文件复制中...\n' + file + ' -> ' + desc);
+      fs.copySync(file.path, desc);
+      message += ' <br> ' + desc;
+    }
+    console.log(message);
+    DocEditor.editor.elements[0].innerHTML += message;
+    DocEditor.contentChanged = true;
+    return false;
+  };
 }
 
 export = WorkPie.Editor;

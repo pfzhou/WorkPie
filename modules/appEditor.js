@@ -23,8 +23,9 @@ var WorkPie;
             DocEditor.loadEditorContent = function (docid) {
                 DocEditor.getDocInfo(docid, function (doc) {
                     if (doc) {
+                        DocEditor.infoChanged = false;
+                        DocEditor.contentChanged = false;
                         DocEditor.docInfo = doc;
-                        DocEditor.needSave = false;
                         angular.element('.titleinput').scope()['docEditor']['title'] = DocEditor.docInfo.title;
                         angular.element('.titleinput').scope().$apply();
                         var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath + DocEditor.docInfo.contentFilename;
@@ -45,13 +46,12 @@ var WorkPie;
                 });
             };
             DocEditor.saveEditorContent = function (scope) {
-                if (this.docInfo == null) {
+                if (this.docInfo == null && (this.infoChanged || this.contentChanged)) {
                     this.docInfo = new DocInfo();
-                    this.needSave = true;
+                    this.infoChanged = true;
                 }
-                var newContent = this.editor.elements[0].innerHTML;
-                if (this.needSave || this.docInfo.contentSize != newContent.length || this.docContent != newContent) {
-                    this.needSave = true;
+                if (this.infoChanged || this.contentChanged) {
+                    var newContent = this.editor.elements[0].innerHTML;
                     this.docInfo.contentSize = newContent.length;
                     this.docContent = newContent;
                     this.docInfo.modifyTime = new Date();
@@ -67,13 +67,13 @@ var WorkPie;
                             fs.mkdirsSync(docPath);
                         }
                         ;
-                        var contentJson = JSON.parse('{}');
-                        contentJson['content'] = DocEditor.docContent;
-                        contentJson['text'] = DocEditor.editor.elements[0].innerText;
-                        fs.writeFileSync(docPath + DocEditor.docInfo.contentFilename, angular.toJson(contentJson));
+                        var docInfoClone = JSON.parse(JSON.stringify(DocEditor.docInfo));
+                        docInfoClone['content'] = DocEditor.docContent;
+                        docInfoClone['text'] = DocEditor.editor.elements[0].innerText;
+                        fs.writeFileSync(docPath + DocEditor.docInfo.contentFilename, angular.toJson(docInfoClone));
                         console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
-                        fs.writeFileSync(docPath + DocEditor.docInfo.infoFilename, angular.toJson(DocEditor.docInfo));
-                        DocEditor.needSave = false;
+                        DocEditor.infoChanged = false;
+                        DocEditor.contentChanged = false;
                         console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
                         console.log('发送docSaved消息。');
                         if (!scope)
@@ -110,7 +110,8 @@ var WorkPie;
             DocEditor.editor = null;
             DocEditor.docInfo = null;
             DocEditor.docContent = '';
-            DocEditor.needSave = false;
+            DocEditor.infoChanged = false;
+            DocEditor.contentChanged = false;
             return DocEditor;
         })();
         Editor.DocEditor = DocEditor;
@@ -123,7 +124,6 @@ var WorkPie;
                 this.folderid = '';
                 this.diskpath = '';
                 this.contentFilename = '.content.txt';
-                this.infoFilename = '.info.txt';
                 this.attachments = [];
                 this.tags = [];
                 this.contentSize = 0;
@@ -172,12 +172,37 @@ var WorkPie;
         ;
         DocEditor.initEditor();
         DocEditor.editor.subscribe('editableInput', function (event, editable) {
-            this.needSave = true;
+            DocEditor.contentChanged = true;
         });
         DocEditor.editor.subscribe('editableClick', function (event, editable) {
         });
         DocEditor.editor.subscribe('editableBlur', function (event, editable) {
         });
+        var holder = document.getElementById('container');
+        holder.ondragover = function () {
+            return false;
+        };
+        holder.ondragleave = holder.ondragend = function () {
+            return false;
+        };
+        holder.ondrop = function (e) {
+            e.preventDefault();
+            var fs = require('fs-extra');
+            var path = require('path');
+            var message = '';
+            for (var i = 0; i < e.dataTransfer.files.length; i++) {
+                var file = e.dataTransfer.files[i];
+                var filename = path.basename(file.path);
+                var desc = 'D:/@MyData/Dropbox/AppData/Desktop/WorkPie/' + filename;
+                console.log('文件复制中...\n' + file + ' -> ' + desc);
+                fs.copySync(file.path, desc);
+                message += ' <br> ' + desc;
+            }
+            console.log(message);
+            DocEditor.editor.elements[0].innerHTML += message;
+            DocEditor.contentChanged = true;
+            return false;
+        };
     })(Editor = WorkPie.Editor || (WorkPie.Editor = {}));
 })(WorkPie || (WorkPie = {}));
 module.exports = WorkPie.Editor;
