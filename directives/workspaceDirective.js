@@ -27,7 +27,7 @@ workspaceDirective.directive('workspacedoc', function () {
 workspaceDirective.directive('doceditor', function () {
     return {
         restrict: 'A',
-        scope: true,
+        scope: false,
         link: function (scope, element, attrs) {
             var oldContentHtml = '';
             setInterval(function () {
@@ -37,7 +37,7 @@ workspaceDirective.directive('doceditor', function () {
                     editor.DocEditor.saveEditorContent(scope);
                     console.log('saved.');
                 });
-            }, 5000);
+            }, 2000);
         }
     };
 });
@@ -49,9 +49,6 @@ workspaceDirective.directive('doclistitem', function ($timeout) {
             scope.$evalAsync(function () {
             });
             $timeout(function () {
-                if (editor.DocEditor.docInfo && (editor.DocEditor.docInfo.id == attr['doclistitem'])) {
-                    attr.$updateClass('list-group-item active', 'list-group-item');
-                }
             });
         }
     };

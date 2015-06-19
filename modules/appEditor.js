@@ -45,6 +45,12 @@ var WorkPie;
                     }
                 });
             };
+            DocEditor.clearEditor = function () {
+                DocEditor.docInfo = null;
+                angular.element('.titleinput').scope()['docEditor']['title'] = '';
+                angular.element('.titleinput').focus();
+                angular.element('.editable').scope()['docEditor']['content'] = '';
+            };
             DocEditor.saveEditorContent = function (scope) {
                 if (this.docInfo == null && (this.infoChanged || this.contentChanged)) {
                     this.docInfo = new DocInfo();
@@ -60,25 +66,33 @@ var WorkPie;
                             console.log('保存文档信息到数据库出错', err);
                             return;
                         }
-                        console.log(numReplaced, upsert);
+                        console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
                         var docPath = workpieConfig.dataPath + workpieConfig.docFolder + DocEditor.docInfo.diskpath;
-                        console.log('准备保存文档内容到：' + docPath);
                         if (!fs.existsSync(docPath)) {
                             fs.mkdirsSync(docPath);
                         }
                         ;
-                        var docInfoClone = JSON.parse(JSON.stringify(DocEditor.docInfo));
+                        var docInfoClone = _.clone(DocEditor.docInfo);
                         docInfoClone['content'] = DocEditor.docContent;
                         docInfoClone['text'] = DocEditor.editor.elements[0].innerText;
                         fs.writeFileSync(docPath + DocEditor.docInfo.contentFilename, angular.toJson(docInfoClone));
-                        console.log('文档保存成功，id = ' + DocEditor.docInfo.id);
+                        console.log('文档文件保存成功，id = ' + DocEditor.docInfo.id);
                         DocEditor.infoChanged = false;
                         DocEditor.contentChanged = false;
-                        console.log('文档信息保存成功，id = ' + DocEditor.docInfo.id);
-                        console.log('发送docSaved消息。');
                         if (!scope)
                             scope = angular.element('.editable').scope();
-                        scope.$emit('docSaved', 'SaveButton');
+                        if (DocEditor.docInfo.isDeleted) {
+                            var info = DocEditor.docInfo;
+                            DocEditor.docInfo = null;
+                            angular.element('.titleinput').scope()['docEditor']['title'] = '';
+                            angular.element('.titleinput').scope().$apply();
+                            angular.element('.editable').scope()['docEditor']['content'] = '';
+                            angular.element('.editable').scope().$apply();
+                            scope.$emit('docDeleted', info);
+                        }
+                        else {
+                            scope.$emit('docSaved', DocEditor.docInfo);
+                        }
                     });
                 }
                 else
@@ -86,7 +100,7 @@ var WorkPie;
             };
             DocEditor.getDocInfo = function (docid, callback) {
                 var result = null;
-                wdDb.db.find({ id: docid }).toArray(function (error, docs) {
+                wdDb.db.find({ id: docid, isDeleted: { $ne: [true] } }).toArray(function (error, docs) {
                     if (error) {
                         console.log('加载文档出错，docid = ' + docid, error);
                         alert('加载文档出错，docid = ' + docid);
@@ -129,6 +143,7 @@ var WorkPie;
                 this.contentSize = 0;
                 this.createTime = null;
                 this.modifyTime = null;
+                this.isDeleted = false;
                 this.id = uuid.v4();
                 this.createTime = new Date();
                 this.modifyTime = new Date();

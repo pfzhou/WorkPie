@@ -69,7 +69,8 @@ blockquote {
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;*/
     border-left: 6px solid #df0d32;
-    margin-left: -5px;
+    margin-left: 0px;
+    margin-bottom: 10px;
     padding-left: 15px;
     font-style: italic;
     color: #555;

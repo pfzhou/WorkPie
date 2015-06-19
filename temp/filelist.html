@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorkPie</title>
+  <link rel="stylesheet" href="../lib/css/bootstrap.css" />
+  <style>
+  * {
+    -webkit-user-select: none;
+  }
+  .files {
+    padding: 0;
+    margin: 0;
+  }
+
+  .file {
+    padding: 2px;
+    margin: 2px;
+    width: 80px;
+    display: inline-block;
+
+    text-align: center;
+    vertical-align: top;
+  }
+
+  .file.focus {
+    background-color: #08C;
+    -webkit-border-radius: 4px;
+  }
+
+  .file .name {
+    width: 80px;
+    word-wrap: break-word;
+  }
+
+  .file.focus .name {
+    color: white;
+  }
+
+  .file .icon {
+    margin: 0;
+    margin-top: 0;
+    width: 80px;
+  }
+
+  .file.focus.icon {
+    -webkit-filter: invert(20%);
+  }
+  </style>
+</head>
+
+<body  style="background-color:#fff">
+  hello tingodb
+</body>
+  <div class="row" style="background: #FFF; -webkit-border-radius: 2px; margin: -5px 1px 0 -19px; height: 100%; overflow: auto">
+    <ul style="margin: 5px;width:500px;" id="files">
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\redis-2.8.19.zip" class="file" style="margin: 5px;width:200px;">
+        <div class="icon" style="float: left;"><img src="icons/compressed.png"></div>
+        <div class="name" style="float: right;">达工作流使用文档 V3.0.docx<br> 300M</div>
+      </div>
+      <div style="float: right;">
+        adfsfdd sfsfasd fasdfa
+      </div>
+    </ul>
+    <ul style="margin: 5px;" id="files">
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\万达工作流使用文档 V3.0.docx" class="file"><div class="icon"><img src="icons/word.png"></div><div class="name">万达工作流使用文档 V3.0.docx</div></div>
+    </ul>
+    <ul style="margin: 5px;" id="files">
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\万达项目.lnk" class="file"><div class="icon"><img src="icons/blank.png"></div><div class="name">万达项目.lnk</div></div>
+    </ul>
+    <ul style="margin: 5px;" id="files">
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\中国建筑一局（集团）有限公司外部数据倒入需求分析.doc" class="file"><div class="icon"><img src="icons/word.png"></div><div class="name">中国建筑一局（集团）有限公司外部数据倒入需求分析.doc</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\中建二局信息化系统对接需求（终版）.doc" class="file"><div class="icon"><img src="icons/word.png"></div><div class="name">中建二局信息化系统对接需求（终版）.doc</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\供方考核办法调整6-12.pptx" class="file"><div class="icon"><img src="icons/powerpoint.png"></div><div class="name">供方考核办法调整6-12.pptx</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\信息管理中心2015年中考核方案.pptx" class="file"><div class="icon"><img src="icons/powerpoint.png"></div><div class="name">信息管理中心2015年中考核方案.pptx</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\关于信息管理中心2015年年中考核的通知-20150616.docx" class="file"><div class="icon"><img src="icons/word.png"></div><div class="name">关于信息管理中心2015年年中考核的通知-20150616.docx</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\工作流和授权平台_Address.xlsx" class="file"><div class="icon"><img src="icons/blank.png"></div><div class="name">工作流和授权平台_Address.xlsx</div></div>
+      <div data-path="D:\@MyData\Dropbox\AppData\Desktop\应用基础架构-20150114.pptx" class="file"><div class="icon"><img src="icons/powerpoint.png"></div><div class="name">应用基础架构-20150114.pptx</div></div>
+    </ul>
+  </div>
+</html>

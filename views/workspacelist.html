@@ -3,10 +3,10 @@
     <h4><b>我的文档记录</b></h4>
   </div>
   <div class="panel-body">
-      <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query.title">
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query.title" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" ng-keyup="cancelsearch($event)">
   </div>
   <div class="list-group doc-list">
-    <a href="#" ng-repeat="doc in docs | filter:query" class="list-group-item" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc($event, doc.id);" doclistitem='{{doc.id}}'>
+    <a href="#" ng-repeat="doc in docs | filter:query" class="list-group-item" ng-class="{active: selecteddocid==doc.id}" style='padding-top:5px;padding-bottom:5px;' ng-click="loaddoc($event, doc.id);" doclistitem='{{doc.id}}' ng-keyup="listkeyup($event)">
       <strong class="list-group-item-heading" style="font-size: 125%;">{{doc.title}}</strong><span class="badge alert-info" ng-if="doc.attachments.length > 0">{{doc.attachments.length}}</span>
       <div>
           <small class="list-group-item-text">{{doc.project}} </small>
