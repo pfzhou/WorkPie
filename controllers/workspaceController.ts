@@ -6,4 +6,10 @@ workpieApp.controller('workspaceController',function($scope) {
   $scope.$on('docDeleted', function(event,doc) {
     $scope.$broadcast("refreshList", doc);
   });
+  $scope.$on('loadAttachments', function(event,message) {
+    $scope.$broadcast("refreshAttachments", message);
+  });
+  $scope.$on('updateAttachments', function(event,message) {
+    $scope.$broadcast("refreshAttachments", message);
+  });
 });

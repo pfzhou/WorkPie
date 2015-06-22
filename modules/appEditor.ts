@@ -1,5 +1,6 @@
 import fs = require('fs-extra');
 import uuid = require('node-uuid');
+import path = require('path');
 //编辑器js类
 declare var MediumEditor: any;
 
@@ -9,8 +10,8 @@ module WorkPie.Editor{
   export class DocEditor{
     //编辑器对象实例
     static editor: any = null;
-    private static docInfo: DocInfo = null;
-    private static docContent: string = '';
+    static docInfo: DocInfo = null;
+    static docContent: string = '';
     static infoChanged: boolean = false;
     static contentChanged: boolean = false;
     //初始化编辑器
@@ -152,6 +153,29 @@ module WorkPie.Editor{
         callback(result);
       });
     }
+
+    static addAttachment(filePath: string){
+      var docinfo = this.docInfo;
+      var atta: AttachmentInfo = new AttachmentInfo();
+      atta.filePath = filePath;
+      atta.fileName = path.basename(filePath);
+      atta.extension = path.extname(filePath);
+      var fileFullPath = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
+      var filestat = fs.statSync(fileFullPath);
+      atta.fileSize = filestat.size;
+      console.log(filestat);
+      atta.fileCreateTime = filestat.birthtime;
+      atta.fileModifyTime = filestat.ctime;
+      docinfo.attachments.push(atta);
+      console.log('添加文件成功！！！');
+      this.infoChanged = true;
+      this.refreshAttatchmentList();
+    };
+
+    static refreshAttatchmentList(){
+      var scope = angular.element('.editable').scope();
+      scope.$emit('loadAttachments', "");
+    }
   }
 
   //文档信息类
@@ -184,12 +208,17 @@ module WorkPie.Editor{
     id: string = '';                //GUID
     fileName: string  = '';         //文件名，包含扩展名
     extension: string = '';         //扩展名
-    fileType: string = '';          //文件类型
+    filePath: string = '';          //文件路径
+    //fileType: string = '';          //文件类型
     fileSize: number = 0;           //文件大小
-    fileSizeDisplay: string = '0K'; //文件大小显示字符串
+    //fileSizeDisplay: string = '0K'; //文件大小显示字符串
     fileAddTime: Date = null;       //文件添加到文档的时间
     fileCreateTime: Date = null;    //文件创建时间
     fileModifyTime: Date = null;    //文件最后修改时间
+    constructor(){
+      this.id = uuid.v4();
+      this.fileAddTime = new Date();
+    }
   }
 
   export function formatDate(date, style) {
@@ -238,25 +267,25 @@ module WorkPie.Editor{
   holder.ondrop = function (e) {
     // this.className = '';
     e.preventDefault();
-
-    var fs = require('fs-extra');
-    var path = require('path');
-
-    // var message = document.getElementById('message');
-    // message.innerText = '文件复制中...';
     var message = '';
     for(var i =0; i< e.dataTransfer.files.length; i++)
     {
+      if(DocEditor.docInfo == null)
+      {
+        DocEditor.docInfo = new DocInfo();
+        DocEditor.infoChanged = true;
+      }
       var file = e.dataTransfer.files[i];
       var filename = path.basename(file.path);
-      var desc = 'D:/@MyData/Dropbox/AppData/Desktop/WorkPie/' + filename;
-      console.log('文件复制中...\n' + file + ' -> ' + desc);
-      fs.copySync(file.path, desc);
-      message += ' <br> ' + desc;
+      var filePath = DocEditor.docInfo.diskpath + filename;
+      var desc = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
+      if(!fs.existsSync(desc))
+      {
+        console.log('文件复制中...\n' + file + ' -> ' + desc);
+        fs.copySync(file.path, desc);
+        DocEditor.addAttachment(filePath);
+      }
     }
-    console.log(message);
-    DocEditor.editor.elements[0].innerHTML += message;
-    DocEditor.contentChanged = true;
     return false;
   };
 }

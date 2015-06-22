@@ -92,8 +92,8 @@ blockquote {
     outline: none;
     margin: 0 0 5px 0;
     padding: 20px 0 5px 0;
-    border-bottom: 1px solid #dbdbdb;
-    height: 500px;
+    border-bottom: 3px solid #dbdbdb;
+    height: 400px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -136,7 +136,7 @@ blockquote {
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     width: 690px;
-    height: 100px;
+    height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
     font-size: 12px;

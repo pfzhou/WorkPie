@@ -49,10 +49,12 @@ workpieApp.controller('listController', function ($scope) {
         console.log('加载文档，id = ' + docid);
         editor.DocEditor.loadEditorContent(docid);
         $scope.selecteddocid = docid;
+        $scope.$emit('loadAttachments', "");
     };
     $scope.newdoc = function () {
         editor.DocEditor.clearEditor();
         $scope.selecteddocid = '';
+        $scope.$emit('loadAttachments', "");
     };
     $scope.cancelsearch = function (event) {
         if (event.keyCode == 27) {

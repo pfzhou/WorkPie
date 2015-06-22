@@ -1,5 +1,6 @@
 var fs = require('fs-extra');
 var uuid = require('node-uuid');
+var path = require('path');
 var WorkPie;
 (function (WorkPie) {
     var Editor;
@@ -121,6 +122,28 @@ var WorkPie;
                     callback(result);
                 });
             };
+            DocEditor.addAttachment = function (filePath) {
+                var docinfo = this.docInfo;
+                var atta = new AttachmentInfo();
+                atta.filePath = filePath;
+                atta.fileName = path.basename(filePath);
+                atta.extension = path.extname(filePath);
+                var fileFullPath = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
+                var filestat = fs.statSync(fileFullPath);
+                atta.fileSize = filestat.size;
+                console.log(filestat);
+                atta.fileCreateTime = filestat.birthtime;
+                atta.fileModifyTime = filestat.ctime;
+                docinfo.attachments.push(atta);
+                console.log('添加文件成功！！！');
+                this.infoChanged = true;
+                this.refreshAttatchmentList();
+            };
+            ;
+            DocEditor.refreshAttatchmentList = function () {
+                var scope = angular.element('.editable').scope();
+                scope.$emit('loadAttachments', "");
+            };
             DocEditor.editor = null;
             DocEditor.docInfo = null;
             DocEditor.docContent = '';
@@ -159,12 +182,13 @@ var WorkPie;
                 this.id = '';
                 this.fileName = '';
                 this.extension = '';
-                this.fileType = '';
+                this.filePath = '';
                 this.fileSize = 0;
-                this.fileSizeDisplay = '0K';
                 this.fileAddTime = null;
                 this.fileCreateTime = null;
                 this.fileModifyTime = null;
+                this.id = uuid.v4();
+                this.fileAddTime = new Date();
             }
             return AttachmentInfo;
         })();
@@ -202,20 +226,22 @@ var WorkPie;
         };
         holder.ondrop = function (e) {
             e.preventDefault();
-            var fs = require('fs-extra');
-            var path = require('path');
             var message = '';
             for (var i = 0; i < e.dataTransfer.files.length; i++) {
+                if (DocEditor.docInfo == null) {
+                    DocEditor.docInfo = new DocInfo();
+                    DocEditor.infoChanged = true;
+                }
                 var file = e.dataTransfer.files[i];
                 var filename = path.basename(file.path);
-                var desc = 'D:/@MyData/Dropbox/AppData/Desktop/WorkPie/' + filename;
-                console.log('文件复制中...\n' + file + ' -> ' + desc);
-                fs.copySync(file.path, desc);
-                message += ' <br> ' + desc;
+                var filePath = DocEditor.docInfo.diskpath + filename;
+                var desc = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
+                if (!fs.existsSync(desc)) {
+                    console.log('文件复制中...\n' + file + ' -> ' + desc);
+                    fs.copySync(file.path, desc);
+                    DocEditor.addAttachment(filePath);
+                }
             }
-            console.log(message);
-            DocEditor.editor.elements[0].innerHTML += message;
-            DocEditor.contentChanged = true;
             return false;
         };
     })(Editor = WorkPie.Editor || (WorkPie.Editor = {}));
