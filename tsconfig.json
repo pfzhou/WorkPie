@@ -39,6 +39,7 @@
         "./typings/node-uuid.d.ts",
         "./typings/node-webkit.d.ts",
         "./typings/node.d.ts",
+        "./typings/tools.d.ts",
         "./typings/underscore.d.ts"
     ]
 }

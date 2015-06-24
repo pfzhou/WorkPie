@@ -43,6 +43,7 @@ var WorkPie;
                         }
                         angular.element('.editable').scope()['docEditor']['content'] = DocEditor.docContent;
                         angular.element('.editable').scope().$apply();
+                        DocEditor.refreshAttatchmentList();
                     }
                 });
             };
@@ -51,6 +52,7 @@ var WorkPie;
                 angular.element('.titleinput').scope()['docEditor']['title'] = '';
                 angular.element('.titleinput').focus();
                 angular.element('.editable').scope()['docEditor']['content'] = '';
+                this.refreshAttatchmentList();
             };
             DocEditor.saveEditorContent = function (scope) {
                 if (this.docInfo == null && (this.infoChanged || this.contentChanged)) {
@@ -96,8 +98,6 @@ var WorkPie;
                         }
                     });
                 }
-                else
-                    console.log('文档没有修改，无需保存');
             };
             DocEditor.getDocInfo = function (docid, callback) {
                 var result = null;
@@ -127,7 +127,7 @@ var WorkPie;
                 var atta = new AttachmentInfo();
                 atta.filePath = filePath;
                 atta.fileName = path.basename(filePath);
-                atta.extension = path.extname(filePath);
+                atta.extension = path.extname(filePath).substr(1);
                 var fileFullPath = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
                 var filestat = fs.statSync(fileFullPath);
                 atta.fileSize = filestat.size;
@@ -135,7 +135,7 @@ var WorkPie;
                 atta.fileCreateTime = filestat.birthtime;
                 atta.fileModifyTime = filestat.ctime;
                 docinfo.attachments.push(atta);
-                console.log('添加文件成功！！！');
+                console.log('添加文件成功！！！', atta);
                 this.infoChanged = true;
                 this.refreshAttatchmentList();
             };
@@ -193,22 +193,6 @@ var WorkPie;
             return AttachmentInfo;
         })();
         Editor.AttachmentInfo = AttachmentInfo;
-        function formatDate(date, style) {
-            var y = date.getFullYear();
-            var M = "0" + (date.getMonth() + 1);
-            M = M.substring(M.length - 2);
-            var d = "0" + date.getDate();
-            d = d.substring(d.length - 2);
-            var h = "0" + date.getHours();
-            h = h.substring(h.length - 2);
-            var m = "0" + date.getMinutes();
-            m = m.substring(m.length - 2);
-            var s = "0" + date.getSeconds();
-            s = s.substring(s.length - 2);
-            return style.replace('yyyy', y).replace('MM', M).replace('dd', d).replace('hh', h).replace('mm', m).replace('ss', s);
-        }
-        Editor.formatDate = formatDate;
-        ;
         DocEditor.initEditor();
         DocEditor.editor.subscribe('editableInput', function (event, editable) {
             DocEditor.contentChanged = true;

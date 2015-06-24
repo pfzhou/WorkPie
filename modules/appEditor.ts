@@ -55,6 +55,7 @@ module WorkPie.Editor{
           }
           angular.element('.editable').scope()['docEditor']['content'] = DocEditor.docContent;
           angular.element('.editable').scope().$apply();
+          DocEditor.refreshAttatchmentList();
         }
       });
     }
@@ -64,6 +65,7 @@ module WorkPie.Editor{
       angular.element('.titleinput').scope()['docEditor']['title'] = '';
       angular.element('.titleinput').focus();
       angular.element('.editable').scope()['docEditor']['content'] = '';
+      this.refreshAttatchmentList();
     }
 
     //保存编辑器内容
@@ -118,8 +120,8 @@ module WorkPie.Editor{
           }
         })
       }
-      else
-        console.log('文档没有修改，无需保存');
+      // else
+      //   console.log('文档没有修改，无需保存');
     }
 
     //获取文档信息
@@ -159,7 +161,7 @@ module WorkPie.Editor{
       var atta: AttachmentInfo = new AttachmentInfo();
       atta.filePath = filePath;
       atta.fileName = path.basename(filePath);
-      atta.extension = path.extname(filePath);
+      atta.extension = path.extname(filePath).substr(1);
       var fileFullPath = workpieConfig.dataPath + workpieConfig.docFolder + filePath;
       var filestat = fs.statSync(fileFullPath);
       atta.fileSize = filestat.size;
@@ -167,7 +169,7 @@ module WorkPie.Editor{
       atta.fileCreateTime = filestat.birthtime;
       atta.fileModifyTime = filestat.ctime;
       docinfo.attachments.push(atta);
-      console.log('添加文件成功！！！');
+      console.log('添加文件成功！！！', atta);
       this.infoChanged = true;
       this.refreshAttatchmentList();
     };
@@ -220,21 +222,6 @@ module WorkPie.Editor{
       this.fileAddTime = new Date();
     }
   }
-
-  export function formatDate(date, style) {
-    var y = date.getFullYear();
-    var M = "0" + (date.getMonth() + 1);
-    M = M.substring(M.length - 2);
-    var d = "0" + date.getDate();
-    d = d.substring(d.length - 2);
-    var h = "0" + date.getHours();
-    h = h.substring(h.length - 2);
-    var m = "0" + date.getMinutes();
-    m = m.substring(m.length - 2);
-    var s = "0" + date.getSeconds();
-    s = s.substring(s.length - 2);
-    return style.replace('yyyy', y).replace('MM', M).replace('dd', d).replace('hh', h).replace('mm', m).replace('ss', s);
-  };
 
   DocEditor.initEditor();
 

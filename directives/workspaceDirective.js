@@ -33,9 +33,7 @@ workspaceDirective.directive('doceditor', function () {
             setInterval(function () {
                 scope.$apply(function () {
                     var editor = WorkPie.Editor;
-                    console.log('saving.....');
                     editor.DocEditor.saveEditorContent(scope);
-                    console.log('saved.');
                 });
             }, 2000);
         }

@@ -43,7 +43,7 @@ workspaceDirective.directive('doceditor', function () {
               //console.log(element);
               //console.log(attrs);
               var editor = WorkPie.Editor;
-              console.log('saving.....');
+              //console.log('saving.....');
               editor.DocEditor.saveEditorContent(scope);
               // if(oldContentHtml !== element.html())
               // {
@@ -56,7 +56,7 @@ workspaceDirective.directive('doceditor', function () {
               // }
               // Hide saving message
               //scope.saving = false;
-              console.log('saved.');
+              //console.log('saved.');
             });
           }, 2000);
         }
